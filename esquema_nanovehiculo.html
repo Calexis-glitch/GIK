@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nanovehículo — Diseño Multicompartimental</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090f;
+    --accent: #c8a96e;
+    --accent2: #4fc3a1;
+    --accent3: #e87d6b;
+    --blue: #82b4ff;
+    --purple: #b482ff;
+    --text: #e8ecf4;
+    --muted: #6b7590;
+    --border: #1a2030;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .sub { font-size: 13px; color: var(--muted); font-weight: 300; }
+
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 40px;
+    align-items: center;
+    max-width: 1100px;
+    width: 100%;
+    margin-bottom: 48px;
+  }
+
+  /* ===== NP ILLUSTRATION ===== */
+  .np-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .np-svg-container {
+    position: relative;
+    width: 340px;
+    height: 340px;
+  }
+
+  /* ===== LEFT LEGEND ===== */
+  .legend-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .legend-item:hover { background: rgba(255,255,255,0.05); }
+
+  .li-dot {
+    width: 12px; height: 12px; border-radius: 50%; margin-top: 4px; flex-shrink: 0;
+  }
+
+  .li-name {
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+
+  .li-desc {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ===== ARROW ===== */
+  .arrow-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .arrow-line {
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  }
+
+  /* ===== MECHANISM PANEL ===== */
+  .mech-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mech-step {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border-left: 3px solid;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .mech-step-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .mech-step-body {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ===== PROPERTIES FOOTER ===== */
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  .prop-card {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.02);
+    text-align: center;
+  }
+
+  .prop-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .prop-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .prop-note {
+    font-size: 10.5px;
+    color: #3d4660;
+    margin-top: 4px;
+  }
+
+  .challenge-box {
+    max-width: 1100px;
+    width: 100%;
+    margin-top: 24px;
+    padding: 20px 24px;
+    border: 1px solid rgba(232,125,107,0.3);
+    border-radius: 14px;
+    background: rgba(232,125,107,0.04);
+  }
+
+  .challenge-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent3);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .challenge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .challenge-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 12px;
+    color: #8a94b0;
+    line-height: 1.5;
+  }
+
+  .ci-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent3);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 800px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .arrow-col { display: none; }
+    .props-grid { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Nano-Cóctel GIK-MET-NP · Diseño estructural</p>
+  <h1>Nanovehículo Multicompartimental<br>con Targeting Activo CD44v6</h1>
+  <p class="sub">Nanopartícula PLGA-PEG · Liberación pH-sensible · Específica para Melanoma</p>
+</header>
+
+<div class="main-layout">
+
+  <!-- LEYENDA IZQUIERDA -->
+  <div class="legend-panel">
+    <div class="legend-item">
+      <div class="li-dot" style="background:#4fc3a1"></div>
+      <div>
+        <div class="li-name" style="color:#4fc3a1">Capa PEG (sigilo)</div>
+        <div class="li-desc">Evade sistema inmune. Aumenta vida media circulante. Reduce opsonización.</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="li-dot" style="background:#c8a96e"></div>
+      <div>
+        <div class="li-name" style="color:#c8a96e">Ligando CD44v6</div>
+        <div class="li-desc">Péptido anti-CD44v6 conjugado. Específico para melanoma. Traducible a humano.</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="li-dot" style="background:#b482ff"></div>
+      <div>
+        <div class="li-name" style="color:#b482ff">Matriz PLGA (hidrofóbica)</div>
+        <div class="li-desc">Encapsula agentes lipofílicos: Denifanstat, Anti-CD36, Gedatolisib.</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="li-dot" style="background:#82b4ff"></div>
+      <div>
+        <div class="li-name" style="color:#82b4ff">Nanocápsulas acuosas</div>
+        <div class="li-desc">Compartimento interno hidrofílico. Encapsula: Glucosa + Insulina + K⁺ + 2-DG + Metformina.</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="li-dot" style="background:#e87d6b"></div>
+      <div>
+        <div class="li-name" style="color:#e87d6b">Sensor pH (imidazol/ketal)</div>
+        <div class="li-desc">Se rompe a pH 6.5 (tumor). Estable a pH 7.4 (sangre). Activa liberación selectiva.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ILUSTRACIÓN SVG -->
+  <div class="np-wrap">
+    <svg viewBox="0 0 340 340" width="340" height="340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Glows -->
+        <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <radialGradient id="coreGrad" cx="40%" cy="35%" r="60%">
+          <stop offset="0%" stop-color="#2a1f6a"/>
+          <stop offset="100%" stop-color="#1a1240"/>
+        </radialGradient>
+        <radialGradient id="aqGrad" cx="40%" cy="35%" r="60%">
+          <stop offset="0%" stop-color="#1a3050"/>
+          <stop offset="100%" stop-color="#0d1e35"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="softglow">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <!-- Dash patterns -->
+        <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="#c8a96e" opacity="0.7"/>
+        </marker>
+      </defs>
+
+      <!-- Background glow -->
+      <circle cx="170" cy="170" r="160" fill="url(#bgGlow)"/>
+
+      <!-- Outer PEG corona (hairy) -->
+      <g opacity="0.5">
+        <!-- PEG chains as wavy lines at angles around particle -->
+        <g stroke="#4fc3a1" stroke-width="1.5" fill="none" opacity="0.7">
+          <path d="M170,50 Q165,38 170,28 Q175,18 170,10"/>
+          <path d="M195,54 Q203,44 208,34 Q213,24 218,16"/>
+          <path d="M217,66 Q228,58 236,50 Q244,42 252,36"/>
+          <path d="M230,86 Q244,82 252,74 Q260,66 268,58"/>
+          <path d="M237,110 Q252,110 260,104 Q268,98 276,90"/>
+          <path d="M237,136 Q252,140 258,150 Q264,160 272,165"/>
+          <path d="M228,160 Q240,170 242,182 Q244,194 248,204"/>
+          <path d="M214,180 Q222,194 220,208 Q218,222 220,232"/>
+          <path d="M195,194 Q198,210 194,222 Q190,234 190,244"/>
+          <path d="M170,198 Q170,214 166,226 Q162,238 162,248"/>
+          <path d="M146,194 Q142,210 138,222 Q134,234 130,244"/>
+          <path d="M125,184 Q118,198 112,208 Q106,218 102,228"/>
+          <path d="M110,166 Q100,176 94,188 Q88,200 82,208"/>
+          <path d="M102,142 Q92,148 84,158 Q76,168 68,172"/>
+          <path d="M102,116 Q92,110 84,102 Q76,94 68,88"/>
+          <path d="M110,94 Q102,84 98,72 Q94,60 88,52"/>
+          <path d="M125,76 Q120,64 118,52 Q116,40 112,30"/>
+          <path d="M146,64 Q144,52 142,40 Q140,28 138,18"/>
+        </g>
+      </g>
+
+      <!-- Main particle - outer PLGA shell -->
+      <circle cx="170" cy="170" r="120" fill="#1a1240" stroke="#b482ff" stroke-width="2" opacity="0.9"/>
+
+      <!-- PLGA matrix gradient -->
+      <circle cx="170" cy="170" r="120" fill="url(#coreGrad)" opacity="0.8"/>
+
+      <!-- pH-sensitive bonds as orange dashes on surface -->
+      <circle cx="170" cy="170" r="120" fill="none" stroke="#e87d6b" stroke-width="3"
+              stroke-dasharray="8 12" stroke-dashoffset="4" opacity="0.6"/>
+
+      <!-- Inner aqueous nanocapsule 1 -->
+      <circle cx="148" cy="148" r="42" fill="url(#aqGrad)" stroke="#82b4ff" stroke-width="1.5" opacity="0.9"/>
+      <text x="148" y="138" text-anchor="middle" fill="#82b4ff" font-family="DM Mono,monospace" font-size="9" opacity="0.9">HIDROFÍLICO</text>
+      <text x="148" y="152" text-anchor="middle" fill="#9ecfff" font-family="Outfit,sans-serif" font-size="9.5" font-weight="500">Glucosa · Insulina</text>
+      <text x="148" y="164" text-anchor="middle" fill="#9ecfff" font-family="Outfit,sans-serif" font-size="9.5">K⁺ · 2-DG · Met</text>
+
+      <!-- Inner aqueous nanocapsule 2 (smaller) -->
+      <circle cx="210" cy="185" r="28" fill="url(#aqGrad)" stroke="#82b4ff" stroke-width="1" opacity="0.8"/>
+      <text x="210" y="182" text-anchor="middle" fill="#9ecfff" font-family="Outfit,sans-serif" font-size="8.5">2-DG</text>
+      <text x="210" y="194" text-anchor="middle" fill="#9ecfff" font-family="Outfit,sans-serif" font-size="8.5">Metformina</text>
+
+      <!-- Lipophilic agents scattered in PLGA matrix -->
+      <!-- Gedatolisib dots -->
+      <circle cx="200" cy="130" r="10" fill="rgba(232,125,107,0.2)" stroke="#e87d6b" stroke-width="1.2"/>
+      <text x="200" y="134" text-anchor="middle" fill="#e87d6b" font-family="DM Mono,monospace" font-size="7">GED</text>
+
+      <circle cx="165" cy="220" r="10" fill="rgba(200,169,110,0.2)" stroke="#c8a96e" stroke-width="1.2"/>
+      <text x="165" y="224" text-anchor="middle" fill="#c8a96e" font-family="DM Mono,monospace" font-size="7">DEN</text>
+
+      <circle cx="130" cy="205" r="10" fill="rgba(79,195,161,0.2)" stroke="#4fc3a1" stroke-width="1.2"/>
+      <text x="130" y="209" text-anchor="middle" fill="#4fc3a1" font-family="DM Mono,monospace" font-size="7">CD36</text>
+
+      <!-- CD44v6 targeting ligands on surface - as Y-shapes -->
+      <g stroke="#c8a96e" stroke-width="1.5" fill="none" filter="url(#glow)" opacity="0.9">
+        <!-- Top -->
+        <path d="M170,50 L170,40 M166,36 L170,40 L174,36"/>
+        <!-- Top right -->
+        <path d="M230,82 L238,74 M236,70 L238,74 L242,70"/>
+        <!-- Right -->
+        <path d="M290,145 L302,143 M302,139 L302,143 L306,141"/>
+        <!-- Bottom right -->
+        <path d="M238,238 L244,248 M240,252 L244,248 L248,252"/>
+        <!-- Bottom -->
+        <path d="M170,290 L170,302 M166,306 L170,302 L174,306"/>
+        <!-- Left -->
+        <path d="M50,152 L38,150 M34,146 L38,150 L34,154"/>
+        <!-- Top left -->
+        <path d="M110,80 L102,72 M98,74 L102,72 L102,68"/>
+      </g>
+
+      <!-- Labels for CD44v6 -->
+      <text x="170" y="8" text-anchor="middle" fill="#c8a96e" font-family="DM Mono,monospace" font-size="8.5">CD44v6</text>
+      <text x="316" y="145" text-anchor="start" fill="#c8a96e" font-family="DM Mono,monospace" font-size="8.5">CD44v6</text>
+
+      <!-- Size indicator -->
+      <line x1="50" y1="296" x2="170" y2="296" stroke="#6b7590" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="50" y1="292" x2="50" y2="300" stroke="#6b7590" stroke-width="1.5"/>
+      <line x1="170" y1="292" x2="170" y2="300" stroke="#6b7590" stroke-width="1.5"/>
+      <text x="110" y="314" text-anchor="middle" fill="#6b7590" font-family="DM Mono,monospace" font-size="9">~ 150–200 nm</text>
+
+      <!-- pH trigger label -->
+      <text x="290" y="230" text-anchor="middle" fill="#e87d6b" font-family="DM Mono,monospace" font-size="8">pH &lt; 6.5</text>
+      <text x="290" y="242" text-anchor="middle" fill="#e87d6b" font-family="DM Mono,monospace" font-size="8">→ liberación</text>
+
+      <!-- Central label -->
+      <text x="170" y="86" text-anchor="middle" fill="#b482ff" font-family="Outfit,sans-serif" font-size="10" opacity="0.7">PLGA (lipofílico)</text>
+
+      <!-- Glow rim -->
+      <circle cx="170" cy="170" r="122" fill="none" stroke="#b482ff" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="170" cy="170" r="119" fill="none" stroke="#c8a96e" stroke-width="0.5" opacity="0.2"/>
+    </svg>
+  </div>
+
+  <!-- MECANISMO DERECHA -->
+  <div class="mech-panel">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:4px;">Mecanismo de acción</div>
+
+    <div class="mech-step" style="border-color:#4fc3a1">
+      <div class="mech-step-title" style="color:#4fc3a1">① Circulación sistémica</div>
+      <div class="mech-step-body">PEG evade opsonización. Sin liberación a pH 7.4 sangre. Circulación extendida.</div>
+    </div>
+
+    <div class="mech-step" style="border-color:#c8a96e">
+      <div class="mech-step-title" style="color:#c8a96e">② Reconocimiento tumoral</div>
+      <div class="mech-step-body">CD44v6 (sobreexpresado en B16F10 y melanoma humano) se une al ligando. Endocitosis activa.</div>
+    </div>
+
+    <div class="mech-step" style="border-color:#e87d6b">
+      <div class="mech-step-title" style="color:#e87d6b">③ Liberación pH-sensible</div>
+      <div class="mech-step-body">Microambiente tumoral ácido (pH 6.2–6.8) rompe enlaces ketal/imidazol. Liberación simultánea de todos los agentes.</div>
+    </div>
+
+    <div class="mech-step" style="border-color:#82b4ff">
+      <div class="mech-step-title" style="color:#82b4ff">④ Sobrecarga glucolítica</div>
+      <div class="mech-step-body">GIK fuerza entrada masiva de glucosa. Insulina activa PI3K/Akt (simultáneamente neutralizada por Gedatolisib).</div>
+    </div>
+
+    <div class="mech-step" style="border-color:#b482ff">
+      <div class="mech-step-title" style="color:#b482ff">⑤ Bloqueo de vías de escape</div>
+      <div class="mech-step-body">2-DG bloquea glucólisis · Metformina bloquea OXPHOS · Anti-CD36 + Denifanstat bloquean lípidos. Sin salida energética.</div>
+    </div>
+
+    <div class="mech-step" style="border-color:#c8a96e; background: rgba(200,169,110,0.05)">
+      <div class="mech-step-title" style="color:#c8a96e">⑥ Colapso y muerte celular</div>
+      <div class="mech-step-body">Estrés RE (CHOP↑) + acidosis + ROS masivos + privación energética → apoptosis. Muerte celular inmunogénica potencial.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROPIEDADES FÍSICAS -->
+<div class="props-grid">
+  <div class="prop-card">
+    <div class="prop-value">~180 nm</div>
+    <div class="prop-label">Tamaño (DLS)</div>
+    <div class="prop-note">Óptimo para efecto EPR en tumor</div>
+  </div>
+  <div class="prop-card">
+    <div class="prop-value">−20 mV</div>
+    <div class="prop-label">Potencial Zeta</div>
+    <div class="prop-note">Estabilidad coloidal en plasma</div>
+  </div>
+  <div class="prop-card">
+    <div class="prop-value">pH 6.5</div>
+    <div class="prop-label">Umbral liberación</div>
+    <div class="prop-note">Selectivo para TME · Estable a pH 7.4</div>
+  </div>
+  <div class="prop-card">
+    <div class="prop-value">5 agentes</div>
+    <div class="prop-label">Co-encapsulación</div>
+    <div class="prop-note">2 compartimentos: hidrofílico + lipofílico</div>
+  </div>
+</div>
+
+<!-- RETOS TÉCNICOS -->
+<div class="challenge-box">
+  <div class="challenge-title">⚠ Retos técnicos de co-encapsulación — a abordar en formulación</div>
+  <div class="challenge-grid">
+    <div class="challenge-item">
+      <div class="ci-num">1</div>
+      <div>Compatibilidad fisicoquímica: glucosa e insulina (hidrofílicas) vs. Denifanstat y Gedatolisib (lipofílicos). Solución: estructura multicompartimental double-emulsion.</div>
+    </div>
+    <div class="challenge-item">
+      <div class="ci-num">2</div>
+      <div>Estabilidad de insulina durante síntesis (temperatura, solventes orgánicos). Solución: encapsulación en fase acuosa a temperatura controlada ≤25°C.</div>
+    </div>
+    <div class="challenge-item">
+      <div class="ci-num">3</div>
+      <div>Eficiencia de encapsulación de 5 agentes simultáneos. Se optimizará ratio fármaco:polímero por separado para cada agente (HPLC post-formulación).</div>
+    </div>
+    <div class="challenge-item">
+      <div class="ci-num">4</div>
+      <div>Liberación secuencial vs. simultánea. Objetivo: liberación simultánea para que Gedatolisib neutralice PI3K/Akt antes de que la insulina active señales de escape. Requiere validación cinética in vitro.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
