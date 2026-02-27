@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupos Experimentales — Nano-Cóctel GIK</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d14;
+    --surface: #111520;
+    --border: #1e2535;
+    --accent: #c8a96e;
+    --accent2: #4fc3a1;
+    --accent3: #e87d6b;
+    --text: #e8ecf4;
+    --muted: #6b7590;
+    --highlight: #1a2030;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Outfit', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .header .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .header .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+
+  .table-wrapper {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: linear-gradient(135deg, #141824, #1a2030);
+    border-bottom: 1px solid var(--accent);
+  }
+
+  thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+  tbody tr:hover { background: var(--highlight); }
+
+  td {
+    padding: 18px 20px;
+    vertical-align: top;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .group-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .type-control    { background: rgba(107,117,144,0.2); color: var(--muted); border: 1px solid rgba(107,117,144,0.3); }
+  .type-free       { background: rgba(232,125,107,0.15); color: var(--accent3); border: 1px solid rgba(232,125,107,0.3); }
+  .type-reference  { background: rgba(79,195,161,0.15); color: var(--accent2); border: 1px solid rgba(79,195,161,0.3); }
+  .type-nano       { background: rgba(200,169,110,0.15); color: var(--accent); border: 1px solid rgba(200,169,110,0.3); }
+  .type-main       { background: rgba(200,169,110,0.3); color: var(--accent); border: 1px solid var(--accent); box-shadow: 0 0 12px rgba(200,169,110,0.2); }
+
+  .group-name {
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .group-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .components-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .chip-gik     { background: rgba(200,169,110,0.1); color: #c8a96e; border: 1px solid rgba(200,169,110,0.25); }
+  .chip-2dg     { background: rgba(130,180,255,0.1); color: #82b4ff; border: 1px solid rgba(130,180,255,0.25); }
+  .chip-met     { background: rgba(180,130,255,0.1); color: #b482ff; border: 1px solid rgba(180,130,255,0.25); }
+  .chip-lip     { background: rgba(79,195,161,0.1); color: #4fc3a1; border: 1px solid rgba(79,195,161,0.25); }
+  .chip-ged     { background: rgba(232,125,107,0.1); color: #e87d6b; border: 1px solid rgba(232,125,107,0.25); }
+  .chip-nano    { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+  .chip-none    { background: transparent; color: var(--muted); border: 1px dashed var(--border); }
+
+  .justification {
+    font-size: 12.5px;
+    color: #8a94b0;
+    line-height: 1.65;
+  }
+
+  .expected {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .star-row td {
+    background: rgba(200,169,110,0.04);
+  }
+
+  .star-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .footnote {
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+
+  .footnote-item { display: flex; gap: 10px; align-items: flex-start; }
+  .fn-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .fn-text { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp   { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <p class="eyebrow">Diseño experimental · Melanoma B16F10 · C57BL/6J</p>
+    <h1>Grupos Experimentales<br>Nano-Cóctel de Estrés Letal Dirigido</h1>
+    <p class="subtitle">n = 10 por grupo (5♂ / 5♀) &nbsp;·&nbsp; Inoculación subcutánea día 0 &nbsp;·&nbsp; Tratamiento día 7–10 &nbsp;·&nbsp; Régimen cada 3–4 días × 3 semanas</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7590"></div> Control</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e87d6b"></div> Fármacos libres</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4fc3a1"></div> Referencia bibliográfica</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c8a96e"></div> Nanopartícula</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c8a96e; box-shadow:0 0 8px #c8a96e88"></div> Grupo principal ★</div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:60px">Grupo</th>
+          <th style="width:180px">Nombre</th>
+          <th style="width:220px">Componentes</th>
+          <th>Justificación</th>
+          <th style="width:160px">Resultado esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td><span class="group-badge type-control">1</span></td>
+          <td>
+            <div class="group-name">Control Negativo</div>
+            <div class="group-tag">CTRL-NEG</div>
+          </td>
+          <td><div class="components-list"><span class="chip chip-none">Vehículo / NP vacías</span></div></td>
+          <td class="justification">Línea base de crecimiento tumoral espontáneo. Permite calcular inhibición porcentual de todos los demás grupos. Controla por el efecto mecánico de la inyección intratumoral.</td>
+          <td class="expected">↑ Tumor progresivo. Referencia 100%.</td>
+        </tr>
+
+        <tr>
+          <td><span class="group-badge type-free">2</span></td>
+          <td>
+            <div class="group-name">GIK Libre</div>
+            <div class="group-tag">GIK-FREE-IT</div>
+          </td>
+          <td><div class="components-list">
+            <span class="chip chip-gik">Glucosa</span>
+            <span class="chip chip-gik">Insulina</span>
+            <span class="chip chip-gik">K⁺</span>
+          </div></td>
+          <td class="justification">Replica la lógica del estudio TGIK (Hill et al., 2005) sin tiroxina. Permite aislar si la sobrecarga glucolítica sola, sin vectorización ni bloqueos, tiene efecto. <em>Se espera mínimo efecto,</em> validando que GIK sola no es suficiente.</td>
+          <td class="expected">≈ Control o mínima reducción. Demuestra insuficiencia de GIK sola.</td>
+        </tr>
+
+        <tr>
+          <td><span class="group-badge type-free">3</span></td>
+          <td>
+            <div class="group-name">Cóctel Libre Completo</div>
+            <div class="group-tag">COCKTAIL-FREE</div>
+          </td>
+          <td><div class="components-list">
+            <span class="chip chip-gik">GIK</span>
+            <span class="chip chip-2dg">2-DG</span>
+            <span class="chip chip-met">Metformina</span>
+            <span class="chip chip-lip">Anti-CD36</span>
+            <span class="chip chip-lip">Denifanstat</span>
+            <span class="chip chip-ged">Gedatolisib</span>
+          </div></td>
+          <td class="justification">Demuestra que la combinación de los 5 agentes sin nanopartícula no logra efecto in vivo (tal como Chen et al. demostraron para 2-DG + metformina libres). Justifica la necesidad del nanovehículo y el targeting activo por CD44v6.</td>
+          <td class="expected">Efecto parcial o nulo. Valida que la vectorización es indispensable.</td>
+        </tr>
+
+        <tr>
+          <td><span class="group-badge type-reference">4</span></td>
+          <td>
+            <div class="group-name">2-DG@MA-dots</div>
+            <div class="group-tag">STD-ORO</div>
+          </td>
+          <td><div class="components-list">
+            <span class="chip chip-2dg">2-DG (nano)</span>
+            <span class="chip chip-met">Metformina (nano)</span>
+          </div></td>
+          <td class="justification">Replica exacta del estudio de Chen et al. (Acta Biomaterialia, 2024). Es el estándar de oro comparativo: bloqueo dual energético vectorizado, ya validado. Nuestro cóctel debe ser superior a este grupo para justificar la complejidad adicional.</td>
+          <td class="expected">Reducción tumoral significativa (referencia bibliográfica: 89× vs. libres).</td>
+        </tr>
+
+        <tr>
+          <td><span class="group-badge type-nano">5</span></td>
+          <td>
+            <div class="group-name">Nano-GIK Sola</div>
+            <div class="group-tag">NP-GIK</div>
+          </td>
+          <td><div class="components-list">
+            <span class="chip chip-gik">GIK (nano)</span>
+            <span class="chip chip-nano">+ CD44v6</span>
+          </div></td>
+          <td class="justification">Aísla el efecto de la sobrecarga glucolítica <em>vectorizada</em> al tumor. Sin los bloqueadores, la insulina activa PI3K/Akt y protege la célula. Se espera efecto mínimo, confirmando que la sobrecarga sola no es letal.</td>
+          <td class="expected">Efecto mínimo. Confirma que GIK necesita los bloqueadores para ser letal.</td>
+        </tr>
+
+        <tr>
+          <td><span class="group-badge type-nano">6</span></td>
+          <td>
+            <div class="group-name">Nano-GIK + Bloqueo Dual</div>
+            <div class="group-tag">NP-GIK-ENERGY</div>
+          </td>
+          <td><div class="components-list">
+            <span class="chip chip-gik">GIK (nano)</span>
+            <span class="chip chip-2dg">2-DG</span>
+            <span class="chip chip-met">Metformina</span>
+            <span class="chip chip-nano">+ CD44v6</span>
+          </div></td>
+          <td class="justification">Evalúa si sobrecarga + bloqueo energético sin bloqueo lipídico ni de PI3K es suficiente. Si supera al Grupo 4 (estándar de oro), confirma el valor añadido de la GIK.</td>
+          <td class="expected">Mejor que Grupo 4 si GIK añade valor. Peor que Grupos 7–8 sin bloqueo lipídico.</td>
+        </tr>
+
+        <tr>
+          <td><span class="group-badge type-nano">7</span></td>
+          <td>
+            <div class="group-name">Nano + Bloqueo Lípidos</div>
+            <div class="group-tag">NP-GIK-LIPID</div>
+          </td>
+          <td><div class="components-list">
+            <span class="chip chip-gik">GIK (nano)</span>
+            <span class="chip chip-2dg">2-DG</span>
+            <span class="chip chip-met">Metformina</span>
+            <span class="chip chip-lip">Anti-CD36</span>
+            <span class="chip chip-lip">Denifanstat</span>
+            <span class="chip chip-nano">+ CD44v6</span>
+          </div></td>
+          <td class="justification">Agrega el bloqueo dual de lípidos (captación + síntesis). Si supera Grupo 6, confirma que la vía lipídica es una ruta de escape crítica en melanoma. Falta aún el blindaje del escudo PI3K/mTOR.</td>
+          <td class="expected">Mayor reducción tumoral que Grupo 6. Confirma rol de los lípidos como vía de escape.</td>
+        </tr>
+
+        <tr class="star-row">
+          <td><span class="group-badge type-main">8</span></td>
+          <td>
+            <div class="star-label">★ Experimental Principal</div>
+            <div class="group-name">Cóctel Completo</div>
+            <div class="group-tag">NP-FULL-COCKTAIL</div>
+          </td>
+          <td><div class="components-list">
+            <span class="chip chip-gik">GIK (nano)</span>
+            <span class="chip chip-2dg">2-DG</span>
+            <span class="chip chip-met">Metformina</span>
+            <span class="chip chip-lip">Anti-CD36</span>
+            <span class="chip chip-lip">Denifanstat</span>
+            <span class="chip chip-ged">Gedatolisib</span>
+            <span class="chip chip-nano">+ CD44v6</span>
+          </div></td>
+          <td class="justification">Hipótesis completa: sobrecarga glucolítica + bloqueo glucólisis + bloqueo OXPHOS + bloqueo lípidos (dual) + neutralización de escudo PI3K/mTOR. El Gedatolisib bloquea upstream y downstream simultáneamente, impidiendo que la insulina active señales de escape antes de que el estrés sea letal.</td>
+          <td class="expected">Mayor reducción tumoral. Máximo estrés de RE (CHOP↑), apoptosis (Casp-3↑), p-Akt↓. Glucemia sistémica normal.</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footnote">
+    <div class="footnote-item">
+      <div class="fn-dot" style="background:#c8a96e"></div>
+      <div class="fn-text"><strong style="color:#c8a96e">GIK:</strong> Glucosa 10% + Insulina Regular 0.5–1 U/kg + KCl. Componente de sobrecarga.</div>
+    </div>
+    <div class="footnote-item">
+      <div class="fn-dot" style="background:#82b4ff"></div>
+      <div class="fn-text"><strong style="color:#82b4ff">2-DG:</strong> 2-Desoxiglucosa 400 mg/kg. Bloquea hexoquinasa → inhibe glucólisis.</div>
+    </div>
+    <div class="footnote-item">
+      <div class="fn-dot" style="background:#b482ff"></div>
+      <div class="fn-text"><strong style="color:#b482ff">Metformina:</strong> 400 mg/kg. Inhibe Complejo I mitocondrial → bloquea OXPHOS.</div>
+    </div>
+    <div class="footnote-item">
+      <div class="fn-dot" style="background:#4fc3a1"></div>
+      <div class="fn-text"><strong style="color:#4fc3a1">Anti-CD36 + Denifanstat:</strong> Bloqueo dual lípidos: captación externa + síntesis interna (FASN).</div>
+    </div>
+    <div class="footnote-item">
+      <div class="fn-dot" style="background:#e87d6b"></div>
+      <div class="fn-text"><strong style="color:#e87d6b">Gedatolisib:</strong> Inhibidor dual PI3K/mTOR. Neutraliza señal de supervivencia de la insulina downstream.</div>
+    </div>
+    <div class="footnote-item">
+      <div class="fn-dot" style="background:#c8a96e88"></div>
+      <div class="fn-text"><strong style="color:#c8a96e">CD44v6:</strong> Receptor de targeting activo específico para melanoma. Conjugado en superficie de nanopartícula PLGA-PEG.</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
