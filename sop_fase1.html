@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOP Fase 1 — B16F10 Melanoma</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f2ee;
+  --paper: #fdfcfa;
+  --ink: #1a1814;
+  --ink2: #3a3630;
+  --muted: #8a8278;
+  --border: #ddd8d0;
+  --teal: #1a7a64;
+  --teal-bg: #e8f5f1;
+  --gold: #8a6020;
+  --gold-bg: #fdf4e4;
+  --red: #8a2020;
+  --red-bg: #fdf0f0;
+  --blue: #1a4a7a;
+  --blue-bg: #e8f0fa;
+  --purple: #5a2a8a;
+  --purple-bg: #f2eefa;
+  --orange: #8a4010;
+  --orange-bg: #fdf0e4;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── LAYOUT ── */
+.layout { display: flex; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--ink);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 28px 0 40px;
+  scrollbar-width: thin;
+  scrollbar-color: #3a3630 transparent;
+}
+
+.sb-logo {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid #2a2620;
+  margin-bottom: 16px;
+}
+
+.sb-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.sb-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f0ece4;
+  line-height: 1.4;
+}
+
+.sb-section { margin-bottom: 6px; }
+
+.sb-section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #4a4640;
+  padding: 8px 20px 4px;
+}
+
+.sb-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 20px;
+  text-decoration: none;
+  color: #7a7268;
+  font-size: 12.5px;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+
+.sb-link:hover { color: #f0ece4; background: #1e1c18; border-left-color: var(--teal); }
+.sb-link.active { color: var(--teal); background: rgba(26,122,100,0.08); border-left-color: var(--teal); }
+
+.sb-week {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: #4a4640;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  padding: 48px 56px 80px;
+  max-width: 900px;
+}
+
+/* ── HEADER ── */
+.doc-header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 24px;
+  margin-bottom: 40px;
+}
+
+.doc-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.doc-meta-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.doc-title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.doc-subtitle { font-size: 15px; color: var(--muted); font-weight: 300; }
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 48px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sec-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+
+.sec-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sec-week {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  background: var(--ink);
+  color: #f0ece4;
+  padding: 3px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* ── PROTOCOL STEP ── */
+.step {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.step-header:hover { background: #f8f6f2; }
+
+.step-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-title { font-weight: 600; font-size: 14px; flex: 1; }
+
+.step-duration {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.step-expand {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.step-body {
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+
+.step-body.open { display: block; padding-top: 16px; }
+
+/* ── PROTOCOL ITEMS ── */
+.proto-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+
+.proto-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.proto-n {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--ink);
+  color: #f0ece4;
+  padding: 2px 7px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.proto-text { color: var(--ink2); }
+.proto-text strong { color: var(--ink); }
+
+/* ── FORMULA BOX ── */
+.formula {
+  background: #f0ece4;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ink);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+
+.formula-comment { color: var(--muted); font-style: italic; }
+
+/* ── ALERT BOXES ── */
+.alert {
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 12px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.alert-icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+.alert-body { flex: 1; }
+.alert-body strong { display: block; margin-bottom: 3px; }
+
+.alert-warn { background: var(--gold-bg); border: 1px solid #d4a843; color: var(--gold); }
+.alert-tip  { background: var(--teal-bg); border: 1px solid #38c9a8; color: var(--teal); }
+.alert-crit { background: var(--red-bg); border: 1px solid #e86060; color: var(--red); }
+.alert-note { background: var(--blue-bg); border: 1px solid #5b9cf6; color: var(--blue); }
+
+/* ── TABLE ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 12.5px;
+}
+
+.data-table th {
+  background: var(--ink);
+  color: #f0ece4;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 9px 12px;
+  text-align: left;
+}
+
+.data-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.data-table tr:hover td { background: #f8f6f2; }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* ── GROUPS VISUAL ── */
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.group-chip {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 12.5px;
+}
+
+.gc-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.gc-name { font-weight: 600; font-size: 13px; margin-bottom: 3px; }
+.gc-comp { font-size: 11.5px; opacity: 0.8; }
+
+/* ── TIMELINE PROGRESS ── */
+.timeline {
+  display: flex;
+  gap: 0;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.tl-item {
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+  position: relative;
+}
+
+.tl-item::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.tl-item:last-child::after { display: none; }
+
+.tl-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  margin: 0 auto 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.tl-label {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.tl-week {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  margin-top: 3px;
+}
+
+/* ── CALCULATION BOX ── */
+.calc-box {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin: 14px 0;
+}
+
+.calc-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 13px;
+}
+
+.calc-row:last-child { border-bottom: none; font-weight: 700; font-size: 14px; }
+.calc-val { font-family: 'IBM Plex Mono', monospace; }
+
+/* ── CHECKLIST ── */
+.checklist { display: flex; flex-direction: column; gap: 6px; margin: 12px 0; }
+
+.cl-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  padding: 8px 12px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.cl-box {
+  width: 16px; height: 16px;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── RESULT EXPECTED ── */
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.result-card {
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.result-go { background: var(--teal-bg); border-color: #38c9a8; }
+.result-no { background: var(--red-bg); border-color: #e86060; }
+
+.result-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+/* ── INDEX PANEL ── */
+.index-panel {
+  background: var(--ink);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 40px;
+}
+
+.ip-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.ip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.ip-item {
+  background: #1e1c18;
+  border-radius: 8px;
+  padding: 12px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.ip-item:hover { background: #2a2820; }
+
+.ip-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #4a4640;
+  margin-bottom: 4px;
+}
+
+.ip-name { font-size: 12px; font-weight: 600; color: #c8c4bc; line-height: 1.3; }
+.ip-weeks { font-size: 11px; color: #4a4640; margin-top: 3px; }
+
+/* ── BACK LINK ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--teal);
+  text-decoration: none;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.back-link:hover { opacity: 1; }
+
+@media (max-width: 860px) {
+  .sidebar { display: none; }
+  .main { padding: 24px 20px 60px; }
+  .ip-grid { grid-template-columns: 1fr 1fr; }
+  .result-grid { grid-template-columns: 1fr; }
+  .groups-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-tag">SOP · Fase 1 · In Vitro</div>
+    <div class="sb-title">Protocolo Completo<br>B16F10 Melanoma</div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Preparación</div>
+    <a href="#s0" class="sb-link"><span>📦</span> Materiales & equipos <span class="sb-week">Pre</span></a>
+    <a href="#s1" class="sb-link"><span>🧬</span> Descongelación B16F10 <span class="sb-week">S1</span></a>
+    <a href="#s2" class="sb-link"><span>🔢</span> Cálculo de células <span class="sb-week">S2</span></a>
+    <a href="#s3" class="sb-link"><span>⚗️</span> Stocks de fármacos <span class="sb-week">S2-3</span></a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Ensayos principales</div>
+    <a href="#s4" class="sb-link"><span>🧫</span> MTT viabilidad <span class="sb-week">S4-6</span></a>
+    <a href="#s5" class="sb-link"><span>⚡</span> ATP CellTiter-Glo <span class="sb-week">S6-8</span></a>
+    <a href="#s6" class="sb-link"><span>🔵</span> Citometría Anexina V <span class="sb-week">S6-8</span></a>
+    <a href="#s7" class="sb-link"><span>🧬</span> Western Blot <span class="sb-week">S10-14</span></a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Cierre</div>
+    <a href="#s8" class="sb-link"><span>📊</span> Estadística & análisis <span class="sb-week">S16-18</span></a>
+    <a href="#s9" class="sb-link"><span>🔀</span> Punto de decisión <span class="sb-week">S16</span></a>
+    <a href="#s10" class="sb-link"><span>📝</span> Manuscrito <span class="sb-week">S18-24</span></a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+    <a class="back-link" href="hub.html" style="margin-bottom:0">← Hub del proyecto</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="metodologia_fase1.html" style="display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--teal);text-decoration:none;border:1px solid rgba(62,207,168,0.3);padding:7px 14px;border-radius:6px;background:rgba(62,207,168,0.06);transition:all 0.15s" onmouseover="this.style.background='rgba(62,207,168,0.12)'" onmouseout="this.style.background='rgba(62,207,168,0.06)'">🔬 Diseño de grupos y metodología →</a>
+      <a href="justificacion_fase1.html" style="display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--gold);text-decoration:none;border:1px solid rgba(212,168,67,0.3);padding:7px 14px;border-radius:6px;background:rgba(212,168,67,0.06);transition:all 0.15s" onmouseover="this.style.background='rgba(212,168,67,0.12)'" onmouseout="this.style.background='rgba(212,168,67,0.06)'">📖 Justificación científica →</a>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-meta">
+      <span class="doc-meta-item">SOP-F1-B16F10-v1.0</span>
+      <span class="doc-meta-item">Duración: 6 meses</span>
+      <span class="doc-meta-item">Modelo: B16F10 · C57BL/6 origin</span>
+      <span class="doc-meta-item">Responsable: Carlos Dueñas</span>
+    </div>
+    <h1 class="doc-title">Protocolo Completo<br>Fase 1: Validación In Vitro</h1>
+    <p class="doc-subtitle">Desde descongelación de la línea celular hasta análisis estadístico y punto de decisión para Fase 2. Sin animales, sin nanopartículas — solo biología celular y fármacos libres.</p>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--ink);color:#f0ece4">P</div>
+      <div class="tl-label">Preparación</div>
+      <div class="tl-week" style="color:var(--muted)">Pre</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--teal);color:white">1</div>
+      <div class="tl-label">Descongelación</div>
+      <div class="tl-week" style="color:var(--teal)">S1–2</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--gold);color:white">2</div>
+      <div class="tl-label">Stocks fármacos</div>
+      <div class="tl-week" style="color:var(--gold)">S2–3</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--teal);color:white">3</div>
+      <div class="tl-label">MTT</div>
+      <div class="tl-week" style="color:var(--teal)">S4–6</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--blue);color:white">4</div>
+      <div class="tl-label">ATP + Citometría</div>
+      <div class="tl-week" style="color:var(--blue)">S6–8</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--purple);color:white">5</div>
+      <div class="tl-label">Western Blot</div>
+      <div class="tl-week" style="color:var(--purple)">S10–14</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--orange);color:white">6</div>
+      <div class="tl-label">Decisión</div>
+      <div class="tl-week" style="color:var(--orange)">S16</div>
+    </div>
+  </div>
+
+  <!-- INDEX -->
+  <div class="index-panel">
+    <div class="ip-title">Índice de secciones</div>
+    <div class="ip-grid">
+      <a href="#s0" class="ip-item"><div class="ip-num">00</div><div class="ip-name">Materiales & equipos requeridos</div><div class="ip-weeks">Pre-inicio</div></a>
+      <a href="#s1" class="ip-item"><div class="ip-num">01</div><div class="ip-name">Descongelación y establecimiento B16F10</div><div class="ip-weeks">Semanas 1–2</div></a>
+      <a href="#s2" class="ip-item"><div class="ip-num">02</div><div class="ip-name">Cálculo total de células necesarias</div><div class="ip-weeks">Semanas 2–3</div></a>
+      <a href="#s3" class="ip-item"><div class="ip-num">03</div><div class="ip-name">Preparación de stocks de fármacos</div><div class="ip-weeks">Semanas 2–3</div></a>
+      <a href="#s4" class="ip-item"><div class="ip-num">04</div><div class="ip-name">Ensayo MTT — dosis respuesta IC₅₀</div><div class="ip-weeks">Semanas 4–6</div></a>
+      <a href="#s5" class="ip-item"><div class="ip-num">05</div><div class="ip-name">Medición ATP CellTiter-Glo</div><div class="ip-weeks">Semanas 6–8</div></a>
+      <a href="#s6" class="ip-item"><div class="ip-num">06</div><div class="ip-name">Citometría Anexina V / Ioduro de Propidio</div><div class="ip-weeks">Semanas 6–8</div></a>
+      <a href="#s7" class="ip-item"><div class="ip-num">07</div><div class="ip-name">Western Blot — mecanismo molecular</div><div class="ip-weeks">Semanas 10–14</div></a>
+      <a href="#s8" class="ip-item"><div class="ip-num">08</div><div class="ip-name">Análisis estadístico</div><div class="ip-weeks">Semanas 16–18</div></a>
+      <a href="#s9" class="ip-item"><div class="ip-num">09</div><div class="ip-name">Punto de decisión — ¿Fase 2?</div><div class="ip-weeks">Semana 16</div></a>
+      <a href="#s10" class="ip-item"><div class="ip-num">10</div><div class="ip-name">Redacción y publicación</div><div class="ip-weeks">Semanas 18–24</div></a>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S0: MATERIALES
+  ───────────────────────────────── -->
+  <div id="s0" class="sec-header">
+    <span class="sec-num">00</span>
+    <span class="sec-title">Materiales, reactivos y equipos requeridos</span>
+    <span class="sec-week">Pre-inicio</span>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <div class="alert-body"><strong>Verifica antes de pedir la línea celular</strong> Confirma que tu laboratorio tiene: campana de flujo laminar clase II, incubadora CO₂ calibrada (37°C, 5% CO₂, 95% humedad), microscopio invertido, centrífuga, lector de placas (absorbancia 570 nm), y acceso a citómetro de flujo. Sin estos equipos, el protocolo no es viable.</div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Categoría</th><th>Material</th><th>Especificación clave</th><th>Cantidad estimada</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Línea celular</strong></td><td>B16F10</td><td>ATCC CRL-6475 · Melanoma murino C57BL/6</td><td>1 vial</td></tr>
+      <tr><td rowspan="5"><strong>Medios y suplementos</strong></td><td>DMEM High Glucose</td><td>Gibco 11965 · 4.5 g/L glucosa</td><td>4 × 500 mL</td></tr>
+      <tr><td>DMEM sin glucosa</td><td>Gibco 11966 · Para controlar glucosa añadida</td><td>2 × 500 mL</td></tr>
+      <tr><td>FBS South America</td><td>Hyclone · Inactivado por calor 56°C 30 min</td><td>2 × 500 mL</td></tr>
+      <tr><td>Penicilina/Estreptomicina</td><td>Gibco 100× · 10,000 U/mL + 10,000 µg/mL</td><td>2 × 100 mL</td></tr>
+      <tr><td>PBS 1× estéril</td><td>Sin calcio ni magnesio</td><td>4 × 500 mL</td></tr>
+      <tr><td rowspan="5"><strong>Fármacos</strong></td><td>2-Deoxy-D-glucose (2-DG)</td><td>Sigma D8375 · ≥98% · 1 g</td><td>1 g</td></tr>
+      <tr><td>Metformin HCl</td><td>Sigma PHR1084 · ≥98%</td><td>1 g</td></tr>
+      <tr><td>Gedatolisib (PKI-587)</td><td>Selleckchem S2628 · 5 mg · disolver en DMSO</td><td>5 mg</td></tr>
+      <tr><td>Denifanstat (TVB-2640)</td><td>Selleckchem S8589 · disolver en DMSO</td><td>10 mg</td></tr>
+      <tr><td>Anti-CD36 (JC63.1)</td><td>Santa Cruz sc-7309 · 200 µg · bloqueador funcional</td><td>200 µg</td></tr>
+      <tr><td rowspan="2"><strong>Insulina & GIK</strong></td><td>Insulina regular Humulin R</td><td>Lilly 100 U/mL · Refrigerar 4°C</td><td>2 viales</td></tr>
+      <tr><td>D-Glucosa + KCl</td><td>Sigma G8270 + P9333 · ACS grade</td><td>100 g + 500 g</td></tr>
+      <tr><td rowspan="4"><strong>Kits de ensayo</strong></td><td>MTT (bromuro de tiazolilo)</td><td>Sigma M5655 · 500 mg</td><td>500 mg</td></tr>
+      <tr><td>CellTiter-Glo® 2.0</td><td>Promega G9241 · ATP luminiscente</td><td>1 kit (100 mL)</td></tr>
+      <tr><td>Anexina V-FITC / PI kit</td><td>BD 556547 · 100 ensayos</td><td>1 kit</td></tr>
+      <tr><td>MycoAlert® PLUS</td><td>Lonza · Detección de micoplasma</td><td>1 kit</td></tr>
+      <tr><td rowspan="5"><strong>Western Blot</strong></td><td>Anti-p-Akt (Ser473)</td><td>Cell Signaling #4060 · Rabbit mAb</td><td>1 vial</td></tr>
+      <tr><td>Anti-Caspasa-3 clivada</td><td>Cell Signaling #9661</td><td>1 vial</td></tr>
+      <tr><td>Anti-CHOP/DDIT3</td><td>Cell Signaling #2895</td><td>1 vial</td></tr>
+      <tr><td>Anti-β-Actina</td><td>Sigma A5441 · control de carga</td><td>1 vial</td></tr>
+      <tr><td>Kit lisis RIPA + inhibidores</td><td>Thermo 89900 + cocktail fosfatasa/proteasa</td><td>1 kit</td></tr>
+      <tr><td rowspan="4"><strong>Consumibles</strong></td><td>Frascos T-75</td><td>Corning · TC-treated · estériles</td><td>1 pack (25 u)</td></tr>
+      <tr><td>Placas 96 pocillos</td><td>Corning · fondo plano · estériles</td><td>10 placas</td></tr>
+      <tr><td>Placas 6 pocillos</td><td>Corning · TC-treated</td><td>10 placas</td></tr>
+      <tr><td>Tubos Eppendorf 1.5 mL</td><td>DNasa/RNasa free</td><td>2 × 500 u</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ─────────────────────────────────
+       S1: DESCONGELACIÓN
+  ───────────────────────────────── -->
+  <div id="s1" class="sec-header">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Descongelación y establecimiento de la línea B16F10</span>
+    <span class="sec-week">Semanas 1–2</span>
+  </div>
+
+  <p style="color:var(--ink2);font-size:13.5px;margin-bottom:16px">La B16F10 es una línea agresiva y de rápida proliferación (tiempo de duplicación ~18–20h). El principal riesgo en esta etapa es contaminación con micoplasma y perder la línea por estrés del descongelamiento. Sigue este protocolo exactamente.</p>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('d1')">
+      <div class="step-badge" style="background:var(--teal-bg);color:var(--teal)">1</div>
+      <span class="step-title">Preparación del día anterior al descongelamiento</span>
+      <span class="step-duration">30 min</span>
+      <span class="step-expand" id="d1-toggle">▾ expandir</span>
+    </div>
+    <div id="d1" class="step-body open">
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">a</div><div class="proto-text">Precalentar <strong>baño María a 37°C</strong> la noche anterior o al menos 1h antes.</div></div>
+        <div class="proto-item"><div class="proto-n">b</div><div class="proto-text">Preparar <strong>15 mL de DMEM completo precalentado</strong> (37°C): DMEM High Glucose + 10% FBS + 1% P/S. Este medio "amortigua" el DMSO tóxico del crioprotector.</div></div>
+        <div class="proto-item"><div class="proto-n">c</div><div class="proto-text">Etiquetar un frasco T-75 con: línea, pase número (P1 post-descongelación), fecha, tus iniciales.</div></div>
+        <div class="proto-item"><div class="proto-n">d</div><div class="proto-text">Encender la campana de flujo y limpiar con etanol 70%. Dejar 10 min de UV antes de empezar.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('d2')">
+      <div class="step-badge" style="background:var(--teal-bg);color:var(--teal)">2</div>
+      <span class="step-title">Descongelamiento del vial (día de trabajo)</span>
+      <span class="step-duration">15 min</span>
+      <span class="step-expand" id="d2-toggle">▾ expandir</span>
+    </div>
+    <div id="d2" class="step-body open">
+      <div class="alert alert-crit">
+        <span class="alert-icon">🚨</span>
+        <div class="alert-body"><strong>Crítico — velocidad es todo</strong> El DMSO es citotóxico a temperatura ambiente. El proceso desde sacar el vial del N₂ líquido hasta agregar medio debe tomar menos de 2 minutos. Si tardas más, las células mueren.</div>
+      </div>
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Retirar el vial del tanque de nitrógeno líquido con pinzas (guantes criogénicos obligatorios). Transportar en hielo seco al laboratorio.</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Sumergir el vial en baño María 37°C. <strong>Agitar suavemente con movimientos circulares</strong> hasta que quede solo un pequeño núcleo de hielo (~60–90 segundos). No descongelar completamente.</div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Limpiar el exterior del vial con etanol 70%. Transferir inmediatamente a campana de flujo.</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text"><strong>Transferir el contenido del vial gota a gota</strong> al tubo con 9 mL de DMEM precalentado, agitando suavemente. La dilución gradual previene choque osmótico.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Centrifugar a <strong>200 × g por 5 minutos</strong>. El pellet contendrá las células; el sobrenadante tiene el DMSO tóxico.</div></div>
+        <div class="proto-item"><div class="proto-n">6</div><div class="proto-text">Aspirar sobrenadante con cuidado (no tocar el pellet). Resuspender el pellet en <strong>5 mL de DMEM completo fresco</strong>.</div></div>
+        <div class="proto-item"><div class="proto-n">7</div><div class="proto-text">Transferir a frasco T-75. Añadir 10 mL más de DMEM completo (total 15 mL). Incubar 37°C, 5% CO₂.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('d3')">
+      <div class="step-badge" style="background:var(--teal-bg);color:var(--teal)">3</div>
+      <span class="step-title">Primeras 48h — Monitoreo crítico</span>
+      <span class="step-duration">Revisión cada 12h</span>
+      <span class="step-expand" id="d3-toggle">▾ expandir</span>
+    </div>
+    <div id="d3" class="step-body">
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">a</div><div class="proto-text"><strong>A las 4h:</strong> Observar en microscopio invertido. Las células deben verse adheridas o en proceso. Si el 80% está flotando y redondeado → descongelamiento fue exitoso si se adhieren al siguiente día.</div></div>
+        <div class="proto-item"><div class="proto-n">b</div><div class="proto-text"><strong>A las 24h:</strong> Cambiar el medio completo (15 mL frescos). Esto elimina células muertas y residuos de DMSO. Verificar adherencia y morfología (células dendríticas oscuras = fenotipo normal de B16F10).</div></div>
+        <div class="proto-item"><div class="proto-n">c</div><div class="proto-text"><strong>A las 48h:</strong> Tomar muestra (0.5 mL) para test de micoplasma MycoAlert. Leer luminiscencia según protocolo del kit. Si ratio &lt; 1.0 → negativo ✅. Si ratio ≥ 1.2 → positivo ❌ descartar lote.</div></div>
+        <div class="proto-item"><div class="proto-n">d</div><div class="proto-text">Fotografiar bajo microscopio con escala de referencia. Esta imagen es la referencia morfológica basal para comparación futura.</div></div>
+      </div>
+      <div class="alert alert-tip">
+        <span class="alert-icon">💡</span>
+        <div class="alert-body"><strong>Morfología normal de B16F10:</strong> Células epitelioides, adherentes, irregulares, algunas con dendritas cortas, color café-dorado. Si ves células completamente redondas y flotantes al día 2 → problema de descongelamiento o contaminación.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('d4')">
+      <div class="step-badge" style="background:var(--teal-bg);color:var(--teal)">4</div>
+      <span class="step-title">Expansión y pases (Semana 1–2) — Escalar para los experimentos</span>
+      <span class="step-duration">Semanas 1–2 · revisar cada 2 días</span>
+      <span class="step-expand" id="d4-toggle">▾ expandir</span>
+    </div>
+    <div id="d4" class="step-body">
+      <div class="alert alert-warn">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-body"><strong>Regla de oro:</strong> Nunca pasar la B16F10 cuando supere 80% de confluencia. A mayor confluencia, las células cambian de fenotipo y pierden propiedades tumorales. El experimento ideal usa células entre el pase 5 y el 15 post-descongelación.</div>
+      </div>
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Cuando el frasco llegue a <strong>70–80% confluencia</strong> (~48h con B16F10), proceder al pase.</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Aspirar medio. Lavar con <strong>5 mL PBS</strong> para remover residuos de FBS que inhiben tripsina.</div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Añadir <strong>3 mL de Tripsina 0.25%/EDTA</strong>. Incubar 3–5 min a 37°C. Golpear suavemente el frasco para desprender células.</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Añadir 7 mL DMEM completo (el FBS inactiva la tripsina). Pipetear para disgregar. Centrifugar 200 × g, 5 min.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Aspirar sobrenadante. Resuspender en medio. Contar en hemocitómetro con azul de tripano (células vivas = transparentes).</div></div>
+        <div class="proto-item"><div class="proto-n">6</div><div class="proto-text">Sembrar a razón <strong>1:5 o 1:10</strong> (según velocidad de crecimiento observada). Para expandir, sembrar varios T-75 en paralelo.</div></div>
+      </div>
+      <div class="formula">
+        <span class="formula-comment">// Cálculo de viabilidad (porcentaje células vivas)</span><br>
+        Células vivas (blancas en azul tripano) = Cv<br>
+        Células muertas (azules) = Cm<br>
+        <strong>% Viabilidad = Cv / (Cv + Cm) × 100</strong><br>
+        <span class="formula-comment">// Mínimo aceptable para iniciar experimentos: ≥ 85% viabilidad</span><br><br>
+        <span class="formula-comment">// Concentración celular</span><br>
+        Células/mL = promedio cuadrantes × 10⁴ × factor dilución
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S2: CÁLCULO TOTAL CÉLULAS
+  ───────────────────────────────── -->
+  <div id="s2" class="sec-header">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Cálculo total de células necesarias para todos los ensayos</span>
+    <span class="sec-week">Semana 2–3</span>
+  </div>
+
+  <p style="color:var(--ink2);font-size:13.5px;margin-bottom:16px">Antes de diseñar los stocks de fármacos, necesitas saber cuántas células vas a necesitar en total para planificar cuántos frascos T-75 mantener en paralelo.</p>
+
+  <div class="calc-box">
+    <div class="calc-title">Cálculo total de células — Fase 1 completa</div>
+    <div class="calc-row"><span>MTT (5,000 células/pocillo × 96 pocillos × 3 tiempos × 3 réplicas biológicas)</span><span class="calc-val">4,320,000</span></div>
+    <div class="calc-row"><span>CellTiter-Glo ATP (5,000 × 96 × 3 tiempos × 3 réplicas)</span><span class="calc-val">4,320,000</span></div>
+    <div class="calc-row"><span>Citometría (200,000 células/pocillo × 6 pocillos × 2 tiempos × 3 réplicas)</span><span class="calc-val">7,200,000</span></div>
+    <div class="calc-row"><span>Western Blot (500,000 células/condición × 6 grupos × 3 tiempos × 2 réplicas)</span><span class="calc-val">18,000,000</span></div>
+    <div class="calc-row"><span>Pérdidas estimadas (20% buffer de seguridad)</span><span class="calc-val">6,768,000</span></div>
+    <div class="calc-row" style="border-top:2px solid var(--ink);padding-top:10px;margin-top:4px"><span>TOTAL CÉLULAS NECESARIAS</span><span class="calc-val">~40,608,000</span></div>
+  </div>
+
+  <div class="alert alert-note">
+    <span class="alert-icon">📐</span>
+    <div class="alert-body"><strong>¿Cuántos frascos T-75 necesitas?</strong> Un T-75 al 80% confluencia contiene aproximadamente 10–15 millones de B16F10. Para tener 40M de células disponibles cuando las necesites (no todas al mismo tiempo — son experimentos secuenciales), con 2–3 T-75 en paralelo en todo momento es suficiente. Criopreserva stocks propios cada 2 semanas como respaldo.</div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S3: STOCKS FÁRMACOS
+  ───────────────────────────────── -->
+  <div id="s3" class="sec-header">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Preparación de stocks madre de fármacos</span>
+    <span class="sec-week">Semanas 2–3</span>
+  </div>
+
+  <div class="alert alert-crit">
+    <span class="alert-icon">🚨</span>
+    <div class="alert-body"><strong>Regla de DMSO:</strong> La concentración final de DMSO en los pocillos NUNCA debe superar 0.1% v/v. A 0.5% empieza a ser citotóxico. Gedatolisib y Denifanstat van en DMSO — calcula cuánto DMSO introduces con cada dilución de trabajo antes de agregar a las células.</div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Fármaco</th><th>Solvente stock</th><th>Concentración stock</th><th>Dilución de trabajo</th><th>Almacenamiento</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>D-Glucosa</strong></td>
+        <td>PBS estéril o agua MQ</td>
+        <td>1 M (180.16 g/mol → disolver 1.8 g en 10 mL)</td>
+        <td>Diluir en DMEM sin glucosa a 5, 25, 50 mM</td>
+        <td>4°C hasta 6 meses</td>
+      </tr>
+      <tr>
+        <td><strong>Insulina (Humulin R)</strong></td>
+        <td>Ya viene en solución 100 U/mL</td>
+        <td>100 U/mL (listo para usar)</td>
+        <td>Diluir en DMEM a 0.1, 0.5, 1.0 U/mL</td>
+        <td>4°C · No congelar · Usar en 28 días</td>
+      </tr>
+      <tr>
+        <td><strong>KCl</strong></td>
+        <td>PBS estéril</td>
+        <td>1 M (74.55 g/mol → disolver 0.745 g en 10 mL)</td>
+        <td>5 mM final en DMEM</td>
+        <td>4°C indefinido</td>
+      </tr>
+      <tr>
+        <td><strong>2-DG</strong></td>
+        <td>PBS estéril (hidrosoluble)</td>
+        <td>500 mM (disolver 0.92 g en 10 mL PBS)</td>
+        <td>1, 5, 10, 20 mM en DMEM</td>
+        <td>−20°C en alícuotas de 500 µL</td>
+      </tr>
+      <tr>
+        <td><strong>Metformina HCl</strong></td>
+        <td>Agua MQ estéril (hidrosoluble)</td>
+        <td>1 M (165.6 g/mol → disolver 1.656 g en 10 mL)</td>
+        <td>1, 5, 10, 20 mM en DMEM</td>
+        <td>−20°C en alícuotas de 500 µL</td>
+      </tr>
+      <tr>
+        <td><strong>Gedatolisib</strong></td>
+        <td>DMSO puro (lipofílico)</td>
+        <td>10 mM en DMSO (PM 615.7 → disolver 6.16 mg en 1 mL DMSO)</td>
+        <td>10, 50, 100, 500 nM en DMEM<br><span style="color:var(--red);font-size:11px">⚠️ Max dilución 1:1000 mínimo para tener ≤0.1% DMSO</span></td>
+        <td>−80°C · Alícuotas 10 µL · No recongelar</td>
+      </tr>
+      <tr>
+        <td><strong>Denifanstat (TVB-2640)</strong></td>
+        <td>DMSO puro (lipofílico)</td>
+        <td>10 mM en DMSO (PM 490.5 → disolver 4.9 mg en 1 mL DMSO)</td>
+        <td>0.1, 1, 5, 10 µM en DMEM<br><span style="color:var(--red);font-size:11px">⚠️ Misma regla de DMSO que Gedatolisib</span></td>
+        <td>−80°C · Alícuotas 10 µL · No recongelar</td>
+      </tr>
+      <tr>
+        <td><strong>Anti-CD36 (JC63.1)</strong></td>
+        <td>Ya viene en PBS/azida · Listo para usar</td>
+        <td>0.2–1 mg/mL según especificaciones</td>
+        <td>1, 5, 10 µg/mL en DMEM<br>Añadir 30 min antes del experimento</td>
+        <td>4°C · No congelar · Usar en 12 meses</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="formula">
+    <span class="formula-comment">// Fórmula para preparar dilución de trabajo desde stock</span><br>
+    C1 × V1 = C2 × V2<br>
+    <span class="formula-comment">// Ejemplo: Gedatolisib 100 nM desde stock 10 mM en pocillo de 100 µL</span><br>
+    V1 = (100 × 10⁻⁹ × 100 × 10⁻⁶) / (10 × 10⁻³) = 0.001 µL de DMSO stock<br>
+    <span class="formula-comment">// → Hacer dilución intermedia: 10 mM → 1 µM (dilución 1:10000 en DMEM) → de ahí tomar 10 µL para 100 µL final</span><br>
+    <span class="formula-comment">// Verificar: 10 µL de 1 µM en 100 µL total = 100 nM ✓ · DMSO residual: 0.001% ✓</span>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S4: ENSAYO MTT
+  ───────────────────────────────── -->
+  <div id="s4" class="sec-header">
+    <span class="sec-num">04</span>
+    <span class="sec-title">Ensayo MTT — Curvas dosis-respuesta e IC₅₀</span>
+    <span class="sec-week">Semanas 4–6</span>
+  </div>
+
+  <p style="color:var(--ink2);font-size:13.5px;margin-bottom:16px">El MTT es el primer ensayo cuantitativo de eficacia. Sus resultados (IC₅₀ por condición) determinan las concentraciones que usarás en todos los ensayos siguientes.</p>
+
+  <!-- ── PLANIFICACIÓN DE POCILLOS ── -->
+  <div style="background:var(--paper);border:2px solid var(--ink);border-radius:12px;padding:24px;margin-bottom:20px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px">Planificación real de pocillos — leer antes de empezar</div>
+
+    <div class="alert alert-note" style="margin-bottom:20px">
+      <span class="alert-icon">📐</span>
+      <div class="alert-body"><strong>El MTT no cabe en una sola placa.</strong> Son ~228 pocillos por tiempo × 3 tiempos = ~684 pocillos en total = ~8 placas de 96. Se organizan en dos fases secuenciales: primero G1–G4 (fármacos solos para obtener IC₅₀), luego G5–G7 (combinaciones con dosis ya informadas).</div>
+    </div>
+
+    <!-- TABLA DE POCILLOS -->
+    <table class="data-table" style="margin-bottom:20px">
+      <thead>
+        <tr><th>Grupo</th><th>Qué se prueba</th><th>Condiciones</th><th>× n=6</th><th>Pocillos</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:#c0392b">G1</strong></td>
+          <td>DMEM estándar + 0.1% DMSO</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">1</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">×6</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">6</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--gold)">G2</strong></td>
+          <td>Glucosa: 3 conc. · Insulina: fija 0.5 U/mL primero</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">3</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">×6</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">18</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--blue)">G3</strong></td>
+          <td>2-DG solo (4 dosis) + Metformina sola (4 dosis) + 4 combinaciones</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">12</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">×6</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">72</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red)">G4</strong></td>
+          <td>Anti-CD36 solo (3 dosis) + Denifanstat solo (4 dosis) + 4 combinaciones</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">11</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">×6</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">66</td>
+        </tr>
+        <tr style="background:#f8f6f2">
+          <td colspan="4" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">SUBTOTAL FASE 1 (G1–G4) · ~3–4 placas por tiempo</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--teal)">162</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--teal)">G5</strong></td>
+          <td>IC₅₀(G2) + IC₅₀×0.5 de 2-DG/Met · 3 dosis totales</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">3</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">×6</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">18</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--purple)">G6</strong></td>
+          <td>G5 + IC₅₀×0.5 de Anti-CD36/Denifanstat · 3 dosis</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">3</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">×6</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">18</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--orange)">G7 ★</strong></td>
+          <td>Cóctel completo · IC₅₀×0.25, ×0.5, ×1 de cada componente</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">3</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">×6</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">18</td>
+        </tr>
+        <tr>
+          <td><strong>Control DMSO</strong></td>
+          <td>DMSO 0.1% solo — descarta toxicidad del solvente</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">1</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:11px">×6</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600">6</td>
+        </tr>
+        <tr style="border-top:2px solid var(--ink)">
+          <td colspan="4" style="font-weight:700">TOTAL POR TIEMPO (24h / 48h / 72h)</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;color:var(--ink)">~228</td>
+        </tr>
+        <tr style="background:#f0ece4">
+          <td colspan="4" style="font-weight:700">TOTAL PLACAS (228 × 3 tiempos ÷ 60 pocillos útiles/placa)</td>
+          <td style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;color:var(--ink)">~12 placas</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- DIAGRAMA DE SECUENCIA -->
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px">Secuencia en 2 fases — cómo se organiza en el tiempo</div>
+
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch">
+
+      <!-- FASE 1 -->
+      <div style="background:#f0ece4;border:1px solid var(--border);border-radius:10px 0 0 10px;padding:18px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);margin-bottom:8px">FASE MTT 1 · SEM 4–5</div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:10px">G1 · G2 · G3 · G4</div>
+        <div style="font-size:12.5px;color:var(--ink2);line-height:1.7">
+          Fármacos <strong>solos</strong> a múltiples dosis.<br>
+          Objetivo: IC₅₀ individual de cada componente.<br><br>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">~3–4 placas por tiempo</span>
+        </div>
+      </div>
+
+      <!-- FLECHA + CONDICIÓN -->
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px;background:#e8e4dc;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+        <div style="font-size:22px;color:var(--ink)">→</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-align:center;margin-top:4px;line-height:1.5;letter-spacing:1px">IC₅₀<br>calculados</div>
+      </div>
+
+      <!-- FASE 2 -->
+      <div style="background:var(--ink);border:1px solid var(--ink);border-radius:0 10px 10px 0;padding:18px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:#4a4640;margin-bottom:8px">FASE MTT 2 · SEM 5–6</div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:10px;color:#f0ece4">G5 · G6 · G7</div>
+        <div style="font-size:12.5px;color:#8a8278;line-height:1.7">
+          <strong style="color:#f0ece4">Combinaciones</strong> con dosis ya informadas por los IC₅₀ de Fase 1.<br>
+          Objetivo: sinergia y efecto del cóctel.<br><br>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4a4640">~2 placas por tiempo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIAGRAMA PLACA 96 -->
+    <div style="margin-top:20px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Ejemplo: distribución en placa 96 para Fase MTT 1 (un tiempo)</div>
+
+      <div style="overflow-x:auto">
+        <table style="border-collapse:collapse;font-size:10px;font-family:'IBM Plex Mono',monospace;margin:0 auto">
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)"></td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">1</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">2</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">3</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">4</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">5</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">6</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">7</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">8</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">9</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">10</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">11</td>
+            <td style="padding:3px 6px;color:var(--muted);text-align:center">12</td>
+          </tr>
+          <!-- Fila A - borde -->
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)">A</td>
+            <td colspan="12" style="background:#e8e4dc;border:1px solid var(--border);padding:4px 8px;text-align:center;color:var(--muted);border-radius:4px">— FILA DE BORDE — solo PBS (evita efecto de evaporación) —</td>
+          </tr>
+          <!-- Fila B - G1 + G2 -->
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)">B</td>
+            <td style="background:#fdf4f4;border:1px solid #e0b0b0;padding:5px;text-align:center;border-radius:3px;color:#8a2020;font-size:9px">G1</td>
+            <td style="background:#fdf4f4;border:1px solid #e0b0b0;padding:5px;text-align:center;border-radius:3px;color:#8a2020;font-size:9px">G1</td>
+            <td style="background:#fdf4f4;border:1px solid #e0b0b0;padding:5px;text-align:center;border-radius:3px;color:#8a2020;font-size:9px">G1</td>
+            <td style="background:#fdf4f4;border:1px solid #e0b0b0;padding:5px;text-align:center;border-radius:3px;color:#8a2020;font-size:9px">G1</td>
+            <td style="background:#fdf4f4;border:1px solid #e0b0b0;padding:5px;text-align:center;border-radius:3px;color:#8a2020;font-size:9px">G1</td>
+            <td style="background:#fdf4f4;border:1px solid #e0b0b0;padding:5px;text-align:center;border-radius:3px;color:#8a2020;font-size:9px">G1</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>5mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>5mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>5mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>5mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>5mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>5mM</td>
+          </tr>
+          <!-- Fila C - G2 cont -->
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)">C</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>25mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>25mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>25mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>25mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>25mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>25mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>50mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>50mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>50mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>50mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>50mM</td>
+            <td style="background:#fdf8e8;border:1px solid #d4b860;padding:5px;text-align:center;border-radius:3px;color:#8a6020;font-size:9px">G2<br>50mM</td>
+          </tr>
+          <!-- Filas D–F: G3 -->
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)">D</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG 5</td>
+          </tr>
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)">E</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG10</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG10</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG10</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG10</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG10</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG10</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG20</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG20</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG20</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG20</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG20</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:9px">G3<br>2DG20</td>
+          </tr>
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)">F</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met1</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met5</td>
+            <td style="background:#e8f0fa;border:1px solid #5b9cf6;padding:5px;text-align:center;border-radius:3px;color:#1a4a7a;font-size:8px">G3<br>Met5</td>
+          </tr>
+          <!-- Fila G - borde inferior + DMSO ctrl -->
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)">G</td>
+            <td style="background:#f2eefa;border:1px solid #b07aff;padding:5px;text-align:center;border-radius:3px;color:#5a2a8a;font-size:9px">DMSO<br>ctrl</td>
+            <td style="background:#f2eefa;border:1px solid #b07aff;padding:5px;text-align:center;border-radius:3px;color:#5a2a8a;font-size:9px">DMSO<br>ctrl</td>
+            <td style="background:#f2eefa;border:1px solid #b07aff;padding:5px;text-align:center;border-radius:3px;color:#5a2a8a;font-size:9px">DMSO<br>ctrl</td>
+            <td style="background:#f2eefa;border:1px solid #b07aff;padding:5px;text-align:center;border-radius:3px;color:#5a2a8a;font-size:9px">DMSO<br>ctrl</td>
+            <td style="background:#f2eefa;border:1px solid #b07aff;padding:5px;text-align:center;border-radius:3px;color:#5a2a8a;font-size:9px">DMSO<br>ctrl</td>
+            <td style="background:#f2eefa;border:1px solid #b07aff;padding:5px;text-align:center;border-radius:3px;color:#5a2a8a;font-size:9px">DMSO<br>ctrl</td>
+            <td colspan="6" style="background:#e8e4dc;border:1px solid var(--border);padding:4px 8px;text-align:center;color:var(--muted);border-radius:4px;font-size:9px">vacíos reserva</td>
+          </tr>
+          <!-- Fila H - borde -->
+          <tr>
+            <td style="padding:3px 6px;color:var(--muted)">H</td>
+            <td colspan="12" style="background:#e8e4dc;border:1px solid var(--border);padding:4px 8px;text-align:center;color:var(--muted);border-radius:4px">— FILA DE BORDE — solo PBS —</td>
+          </tr>
+        </table>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:8px;font-style:italic">Esta placa muestra G1+G2+G3 parcial. G3 completo (Met×10, ×20 + combinaciones) y G4 van en la placa 2. G5–G7 van en placa 3 después de calcular IC₅₀.</p>
+    </div>
+  </div>
+
+  <div class="groups-grid" style="margin-bottom:16px">
+    <div class="group-chip" style="background:#fdf4f4;border-color:#c0392b;color:#6a1a14">
+      <div class="gc-label" style="color:#c0392b">G1</div>
+      <div class="gc-name">Control negativo</div>
+      <div class="gc-comp">DMEM + 10% FBS + 0.1% DMSO</div>
+    </div>
+    <div class="group-chip" style="background:var(--gold-bg);border-color:var(--gold)">
+      <div class="gc-label" style="color:var(--gold)">G2</div>
+      <div class="gc-name">GIK libre</div>
+      <div class="gc-comp">Glu 5/25/50 mM + Ins 0.1/0.5/1 U/mL + KCl 5 mM</div>
+    </div>
+    <div class="group-chip" style="background:var(--blue-bg);border-color:var(--blue)">
+      <div class="gc-label" style="color:var(--blue)">G3</div>
+      <div class="gc-name">Bloqueo energético</div>
+      <div class="gc-comp">2-DG 1–20 mM + Metformina 1–20 mM</div>
+    </div>
+    <div class="group-chip" style="background:var(--red-bg);border-color:var(--red)">
+      <div class="gc-label" style="color:var(--red)">G4</div>
+      <div class="gc-name">Bloqueo lipídico</div>
+      <div class="gc-comp">Anti-CD36 1–10 µg/mL + Denifanstat 0.1–10 µM</div>
+    </div>
+    <div class="group-chip" style="background:var(--teal-bg);border-color:var(--teal)">
+      <div class="gc-label" style="color:var(--teal)">G5</div>
+      <div class="gc-name">GIK + Bloqueo energético</div>
+      <div class="gc-comp">G2 + 2-DG + Metformina a IC₅₀×0.5</div>
+    </div>
+    <div class="group-chip" style="background:var(--purple-bg);border-color:var(--purple)">
+      <div class="gc-label" style="color:var(--purple)">G6</div>
+      <div class="gc-name">GIK + Energía + Lípidos</div>
+      <div class="gc-comp">G5 + Anti-CD36 + Denifanstat</div>
+    </div>
+    <div class="group-chip" style="background:var(--orange-bg);border-color:var(--orange);grid-column: span 2;">
+      <div class="gc-label" style="color:var(--orange)">G7 ★ CÓCTEL COMPLETO</div>
+      <div class="gc-name">Todos los componentes</div>
+      <div class="gc-comp">GIK + 2-DG + Metformina + Anti-CD36 + Denifanstat + Gedatolisib 100 nM</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('m1')">
+      <div class="step-badge" style="background:var(--teal-bg);color:var(--teal)">1</div>
+      <span class="step-title">Siembra en placa 96 pocillos — Día 0</span>
+      <span class="step-duration">2 horas</span>
+      <span class="step-expand" id="m1-toggle">▾ expandir</span>
+    </div>
+    <div id="m1" class="step-body open">
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Preparar suspensión de B16F10 a <strong>50,000 células/mL</strong> en DMEM completo (→ 5,000 células en 100 µL por pocillo).</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Dispensar <strong>100 µL por pocillo</strong> en filas internas de la placa. Dejar la fila exterior con solo PBS (para evitar efecto borde de evaporación).</div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Incubar 24h a 37°C/5% CO₂ para que las células se adhieran antes del tratamiento.</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Al día siguiente: verificar adhesión en microscopio antes de añadir fármacos.</div></div>
+      </div>
+      <div class="formula">
+        <span class="formula-comment">// Diseño de placa sugerido para 7 grupos × 6 réplicas × 3 tiempos</span><br>
+        Usar 3 placas de 96 pocillos (una por tiempo: 24h, 48h, 72h)<br>
+        Placa 1 (24h): G1×6 | G2×6 | G3×6 | G4×6 | G5×6 | G6×6 | G7×6 = 42 pocillos<br>
+        + Control DMSO solo ×6 + Control medio solo ×6 = 54 pocillos totales<br>
+        <span class="formula-comment">// Queda espacio suficiente evitando filas externas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('m2')">
+      <div class="step-badge" style="background:var(--teal-bg);color:var(--teal)">2</div>
+      <span class="step-title">Adición de tratamientos — Día 1</span>
+      <span class="step-duration">3 horas</span>
+      <span class="step-expand" id="m2-toggle">▾ expandir</span>
+    </div>
+    <div id="m2" class="step-body open">
+      <div class="alert alert-warn">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-body"><strong>Para el G2 (GIK):</strong> Usar DMEM sin glucosa (Gibco 11966) como base y añadir la glucosa deseada. Esto garantiza que sabes exactamente la concentración de glucosa final. Con DMEM estándar (ya tiene 4.5 g/L ≈ 25 mM), la concentración basal estaría sumada.</div>
+      </div>
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Preparar mezclas de tratamiento en tubos Eppendorf para cada grupo y concentración.</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Aspirar el medio de las células (100 µL). <strong>No dejar los pocillos secos más de 30 segundos.</strong></div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Añadir inmediatamente <strong>100 µL de la mezcla de tratamiento</strong> al pocillo correspondiente.</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Para G4 (Anti-CD36): Pre-incubar células con el anticuerpo 30 min antes de añadir Denifanstat.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Regresar a incubadora. Cada placa sale en su tiempo correspondiente (24h, 48h, 72h).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('m3')">
+      <div class="step-badge" style="background:var(--teal-bg);color:var(--teal)">3</div>
+      <span class="step-title">Lectura MTT al finalizar cada tiempo</span>
+      <span class="step-duration">3 horas por placa</span>
+      <span class="step-expand" id="m3-toggle">▾ expandir</span>
+    </div>
+    <div id="m3" class="step-body">
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Preparar solución MTT: disolver polvo MTT en PBS a <strong>5 mg/mL</strong>. Filtrar (0.22 µm) para esterilizar. Proteger de la luz.</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Al final del tiempo de tratamiento, añadir <strong>10 µL de solución MTT por pocillo</strong> (sin retirar el tratamiento).</div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Incubar <strong>4 horas a 37°C protegido de la luz</strong>. Las mitocondrias activas convierten MTT amarillo → formazán morado.</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Aspirar todo el medio (incluyendo MTT sobrante). <strong>Importante: no hay que lavar</strong>, solo aspirar.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Añadir <strong>100 µL de DMSO puro</strong> por pocillo. Agitar placa en vortex suave o en agitador de placas 10 minutos para disolver cristales de formazán.</div></div>
+        <div class="proto-item"><div class="proto-n">6</div><div class="proto-text">Leer en lector de placas a <strong>570 nm</strong> (absorbancia referencia a 690 nm).</div></div>
+        <div class="proto-item"><div class="proto-n">7</div><div class="proto-text">Guardar los datos en Excel. Calcular % viabilidad = (Abs muestra / Abs G1) × 100.</div></div>
+      </div>
+      <div class="formula">
+        <span class="formula-comment">// Para calcular IC₅₀ en GraphPad Prism o R</span><br>
+        Análisis → Nonlinear Regression → log(inhibitor) vs. normalized response<br>
+        Función: Y = 100 / (1 + (X/IC50)^HillSlope)<br>
+        <span class="formula-comment">// Reportar IC₅₀ con intervalo de confianza 95%</span><br>
+        <span class="formula-comment">// En R: usar paquete 'drc' con función drm(Response ~ Dose, fct = LL.4())</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S5: ATP
+  ───────────────────────────────── -->
+  <div id="s5" class="sec-header">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Medición de ATP intracelular — CellTiter-Glo® 2.0</span>
+    <span class="sec-week">Semanas 6–8</span>
+  </div>
+
+  <p style="color:var(--ink2);font-size:13.5px;margin-bottom:16px">Este ensayo mide directamente el colapso energético que predice tu hipótesis. Usar las dosis IC₅₀×0.5 que obtuviste en el MTT para que el efecto no sea ya 100% de muerte — necesitas ver el rango donde la energía cae antes de que la célula muera.</p>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('a1')">
+      <div class="step-badge" style="background:var(--gold-bg);color:var(--gold)">1</div>
+      <span class="step-title">Protocolo CellTiter-Glo en placa de 96 pocillos blanca opaca</span>
+      <span class="step-duration">2 horas por punto de tiempo</span>
+      <span class="step-expand" id="a1-toggle">▾ expandir</span>
+    </div>
+    <div id="a1" class="step-body open">
+      <div class="alert alert-note">
+        <span class="alert-icon">📋</span>
+        <div class="alert-body"><strong>Usar placa blanca opaca, no transparente.</strong> La luminiscencia se mide desde la parte inferior. Las placas transparentes o negras reducen la señal hasta 10 veces. El kit Promega G9241 viene con suficiente reactivo para 1000 ensayos.</div>
+      </div>
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Sembrar y tratar igual que MTT, pero en placa de 96 pocillos <strong>blanca opaca</strong>.</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Tiempos de medición: <strong>6h, 12h, 24h</strong> (cinética de colapso energético, no esperes 72h).</div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Al tiempo de medición: sacar placa de incubadora y equilibrar <strong>30 min a temperatura ambiente</strong> (crítico: temperatura afecta la actividad de luciferina).</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Descongelar el reactivo CellTiter-Glo a temperatura ambiente protegido de la luz.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Añadir <strong>100 µL de reactivo por pocillo</strong> (volumen 1:1 con el medio). Mezclar pipeteando 2 veces.</div></div>
+        <div class="proto-item"><div class="proto-n">6</div><div class="proto-text">Agitar en agitador orbital <strong>2 min</strong> (esto lisa las células).</div></div>
+        <div class="proto-item"><div class="proto-n">7</div><div class="proto-text">Incubar <strong>10 min en oscuridad</strong> a temperatura ambiente para estabilizar la señal.</div></div>
+        <div class="proto-item"><div class="proto-n">8</div><div class="proto-text">Leer luminiscencia en lector de placas (modo luminiscencia, sin filtro). Señal = ATP presente.</div></div>
+        <div class="proto-item"><div class="proto-n">9</div><div class="proto-text">Normalizar: % ATP = (Luminiscencia muestra / Luminiscencia G1) × 100. Graficar curva temporal.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S6: CITOMETRÍA
+  ───────────────────────────────── -->
+  <div id="s6" class="sec-header">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Citometría de flujo — Anexina V-FITC / Ioduro de Propidio</span>
+    <span class="sec-week">Semanas 6–8</span>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('c1')">
+      <div class="step-badge" style="background:var(--blue-bg);color:var(--blue)">1</div>
+      <span class="step-title">Protocolo completo de tinción y adquisición</span>
+      <span class="step-duration">3 horas · Placa 6 pocillos</span>
+      <span class="step-expand" id="c1-toggle">▾ expandir</span>
+    </div>
+    <div id="c1" class="step-body open">
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Sembrar <strong>200,000 células/pocillo</strong> en placa de 6 pocillos. Incubar 24h para adhesión.</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Tratar con los 7 grupos a dosis IC₅₀ (obtenida de MTT). Tiempos: 24h y 48h.</div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text"><strong>Recolección de células:</strong> Aspirar medio y <strong>conservarlo en tubo Falcon 15 mL</strong> (contiene células muertas y apoptóticas que se desprendieron — no tirarlas).</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Lavar pocillo con 1 mL PBS frío. Añadir al mismo tubo.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Añadir 500 µL Tripsina. Incubar 3 min. Desactivar con 1 mL DMEM. Añadir al mismo tubo.</div></div>
+        <div class="proto-item"><div class="proto-n">6</div><div class="proto-text">Centrifugar <strong>300 × g, 5 min, 4°C</strong>. Aspirar sobrenadante. Lavar ×2 con PBS frío.</div></div>
+        <div class="proto-item"><div class="proto-n">7</div><div class="proto-text">Resuspender en <strong>100 µL de Buffer de Unión 1×</strong> (del kit BD). Ajustar a ≤1×10⁶ células/mL.</div></div>
+        <div class="proto-item"><div class="proto-n">8</div><div class="proto-text">Añadir <strong>5 µL Anexina V-FITC</strong> + <strong>5 µL PI</strong>. Mezclar suavemente. Incubar <strong>15 min a temperatura ambiente en oscuridad</strong>.</div></div>
+        <div class="proto-item"><div class="proto-n">9</div><div class="proto-text">Añadir <strong>400 µL de buffer de unión</strong>. Adquirir en citómetro dentro de 1 hora (la señal se degrada).</div></div>
+        <div class="proto-item"><div class="proto-n">10</div><div class="proto-text">Adquirir mínimo <strong>10,000 eventos por muestra</strong>. Canal FITC (Anexina) y canal PE o 620LP (PI).</div></div>
+      </div>
+      <div class="alert alert-tip">
+        <span class="alert-icon">💡</span>
+        <div class="alert-body"><strong>Controles de compensación obligatorios:</strong> (1) Células sin teñir — establece autofluorescencia. (2) Células + Anexina V-FITC sola. (3) Células + PI solo. (4) Células tratadas con camptotecina 5 µM/24h — control positivo de apoptosis. Sin estos, el análisis de cuadrantes no es válido.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('c2')">
+      <div class="step-badge" style="background:var(--blue-bg);color:var(--blue)">2</div>
+      <span class="step-title">Análisis en FlowJo — Interpretación de cuadrantes</span>
+      <span class="step-duration">1 hora por experimento</span>
+      <span class="step-expand" id="c2-toggle">▾ expandir</span>
+    </div>
+    <div id="c2" class="step-body">
+      <table class="data-table">
+        <thead><tr><th>Cuadrante</th><th>Anexina V</th><th>PI</th><th>Interpretación</th><th>Resultado esperado G7</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Q3 (inf-izq)</strong></td><td>−</td><td>−</td><td>Células vivas</td><td>↓↓ reducida</td></tr>
+          <tr><td><strong>Q4 (inf-der)</strong></td><td>+</td><td>−</td><td>Apoptosis temprana ✅</td><td>↑↑ aumentada</td></tr>
+          <tr><td><strong>Q2 (sup-der)</strong></td><td>+</td><td>+</td><td>Apoptosis tardía / necrosis secundaria</td><td>↑ aumentada</td></tr>
+          <tr><td><strong>Q1 (sup-izq)</strong></td><td>−</td><td>+</td><td>Necrosis primaria ⚠️</td><td>↓ mínima (no queremos necrosis)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S7: WESTERN BLOT
+  ───────────────────────────────── -->
+  <div id="s7" class="sec-header">
+    <span class="sec-num">07</span>
+    <span class="sec-title">Western Blot — Validación molecular del mecanismo</span>
+    <span class="sec-week">Semanas 10–14</span>
+  </div>
+
+  <div class="alert alert-note">
+    <span class="alert-icon">📋</span>
+    <div class="alert-body"><strong>Solo si MTT y citometría son positivos.</strong> El WB confirma que los mecanismos propuestos (bloqueo PI3K/mTOR, estrés RE, apoptosis intrínseca) operan. Hacerlo antes sería desperdiciar anticuerpos costosos.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('w1')">
+      <div class="step-badge" style="background:var(--purple-bg);color:var(--purple)">1</div>
+      <span class="step-title">Extracción de proteínas — Lisis celular con RIPA</span>
+      <span class="step-duration">2 horas · Placa 6 pocillos</span>
+      <span class="step-expand" id="w1-toggle">▾ expandir</span>
+    </div>
+    <div id="w1" class="step-body open">
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Sembrar <strong>500,000 células/pocillo</strong> en placa 6 pocillos. Tratar grupos G1, G2, G3, G5, G6, G7 (los más informativos).</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Al tiempo de lisis: aspirar medio. Lavar ×2 con PBS frío <strong>sobre hielo</strong> (mantener todo en hielo desde aquí).</div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Añadir <strong>150 µL de buffer RIPA + inhibidores de proteasa y fosfatasa</strong> por pocillo. Incubar 15 min en hielo.</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Raspar células con scraper de plástico. Transferir a tubo Eppendorf frío.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Sonicar 3 × 5 segundos (pulsos de sonicación en hielo para no calentar).</div></div>
+        <div class="proto-item"><div class="proto-n">6</div><div class="proto-text">Centrifugar <strong>14,000 × g, 15 min, 4°C</strong>. El sobrenadante es tu extracto proteico. Pellet = restos celulares, descartar.</div></div>
+        <div class="proto-item"><div class="proto-n">7</div><div class="proto-text">Cuantificar proteínas con kit BCA. Leer absorbancia 562 nm. Normalizar a <strong>30 µg de proteína total por carril</strong>.</div></div>
+        <div class="proto-item"><div class="proto-n">8</div><div class="proto-text">Preparar mezcla con buffer de carga Laemmli 4× (con β-mercaptoetanol). Hervir 5 min a 95°C. Congelar a −80°C hasta correr el gel.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('w2')">
+      <div class="step-badge" style="background:var(--purple-bg);color:var(--purple)">2</div>
+      <span class="step-title">SDS-PAGE y transferencia</span>
+      <span class="step-duration">4–5 horas</span>
+      <span class="step-expand" id="w2-toggle">▾ expandir</span>
+    </div>
+    <div id="w2" class="step-body">
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Usar geles 10% para p-Akt (60 kDa), 12% para Caspasa-3 (17/19 kDa clivada), 10% para CHOP (27 kDa).</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Cargar <strong>30 µg proteína por carril</strong>. Incluir marcador de peso molecular en primer y último carril.</div></div>
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Correr a <strong>80V durante 30 min, luego 120V hasta que el frente llegue al borde</strong> (~1.5h total).</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Transferencia húmeda a membrana PVDF (previamente activada con metanol 30 seg): <strong>100V, 1h, 4°C en buffer de transferencia</strong>.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Verificar eficiencia de transferencia: teñir membrana con Ponceau S por 2 min, verificar bandas, luego desteñir con agua.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep('w3')">
+      <div class="step-badge" style="background:var(--purple-bg);color:var(--purple)">3</div>
+      <span class="step-title">Bloqueo, anticuerpos y revelado</span>
+      <span class="step-duration">Overnight + 4h día siguiente</span>
+      <span class="step-expand" id="w3-toggle">▾ expandir</span>
+    </div>
+    <div id="w3" class="step-body">
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">1</div><div class="proto-text">Bloquear membrana: <strong>leche 5% en TBST 1h temperatura ambiente</strong> en agitador. Para anticuerpos anti-fosfoproteína (p-Akt): usar BSA 5% en TBS (no leche — la caseína tiene fosfoproteínas).</div></div>
+        <div class="proto-item"><div class="proto-n">2</div><div class="proto-text">Anticuerpo primario: diluir en BSA 5% o leche 5% según ficha técnica. Incubar <strong>overnight a 4°C en agitador</strong>.</div></div>
+      </div>
+      <table class="data-table" style="margin:12px 0">
+        <thead><tr><th>Anticuerpo</th><th>Dilución</th><th>Buffer</th><th>PM esperado</th></tr></thead>
+        <tbody>
+          <tr><td>p-Akt (Ser473) CST #4060</td><td>1:2000</td><td>BSA 5% en TBST</td><td>60 kDa</td></tr>
+          <tr><td>t-Akt CST #9272 (control)</td><td>1:1000</td><td>BSA 5%</td><td>60 kDa</td></tr>
+          <tr><td>Caspasa-3 clivada CST #9661</td><td>1:1000</td><td>BSA 5%</td><td>17/19 kDa</td></tr>
+          <tr><td>CHOP/DDIT3 CST #2895</td><td>1:1000</td><td>Leche 5%</td><td>27 kDa</td></tr>
+          <tr><td>β-Actina Sigma A5441</td><td>1:10000</td><td>Leche 5%</td><td>42 kDa</td></tr>
+        </tbody>
+      </table>
+      <div class="proto-list">
+        <div class="proto-item"><div class="proto-n">3</div><div class="proto-text">Lavar ×3 con TBST, 10 min cada lavado.</div></div>
+        <div class="proto-item"><div class="proto-n">4</div><div class="proto-text">Anticuerpo secundario HRP: diluir 1:5000 en leche 5%. Incubar <strong>1h temperatura ambiente</strong>.</div></div>
+        <div class="proto-item"><div class="proto-n">5</div><div class="proto-text">Lavar ×3 TBST. Revelado con ECL (Thermo SuperSignal West Pico PLUS). Imagen en ChemiDoc o película.</div></div>
+        <div class="proto-item"><div class="proto-n">6</div><div class="proto-text">Densitometría con ImageJ: medir área bajo la banda. Normalizar vs β-Actina. Expresar como fold-change vs G1.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S8: ESTADÍSTICA
+  ───────────────────────────────── -->
+  <div id="s8" class="sec-header">
+    <span class="sec-num">08</span>
+    <span class="sec-title">Análisis estadístico — GraphPad Prism o R</span>
+    <span class="sec-week">Semanas 16–18</span>
+  </div>
+
+  <table class="data-table">
+    <thead><tr><th>Tipo de dato</th><th>Prueba estadística</th><th>Software</th><th>Significancia</th></tr></thead>
+    <tbody>
+      <tr><td>% Viabilidad MTT entre 7 grupos</td><td>ANOVA una vía + post-hoc Tukey</td><td>GraphPad o R (aov + TukeyHSD)</td><td>p &lt; 0.05</td></tr>
+      <tr><td>Curva viabilidad vs tiempo</td><td>ANOVA dos vías (grupo × tiempo)</td><td>GraphPad Prism 10</td><td>p &lt; 0.05</td></tr>
+      <tr><td>Sinergia entre componentes</td><td>Índice de Combinación Chou-Talalay</td><td>CompuSyn (gratuito) o R paquete synergyfinder</td><td>IC &lt; 0.7 = sinergia</td></tr>
+      <tr><td>Apoptosis (% cuadrantes)</td><td>ANOVA una vía + Tukey</td><td>FlowJo → GraphPad</td><td>p &lt; 0.05</td></tr>
+      <tr><td>ATP (fold-change)</td><td>ANOVA + Tukey</td><td>GraphPad o R</td><td>p &lt; 0.05</td></tr>
+      <tr><td>Densitometría WB</td><td>ANOVA + Dunnett (vs G1)</td><td>ImageJ → GraphPad</td><td>p &lt; 0.05</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-tip">
+    <span class="alert-icon">💡</span>
+    <div class="alert-body"><strong>R gratuito — paquetes clave:</strong> <code>drc</code> (curvas dosis-respuesta, IC₅₀), <code>ggplot2</code> (gráficas publicables), <code>agricolae</code> (ANOVA + Tukey), <code>synergyfinder</code> (análisis de sinergia). Todo gratuito y con publicaciones que puedes citar en tu manuscrito.</div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S9: PUNTO DE DECISIÓN
+  ───────────────────────────────── -->
+  <div id="s9" class="sec-header">
+    <span class="sec-num">09</span>
+    <span class="sec-title">Punto de decisión — ¿Avanzar a Fase 2?</span>
+    <span class="sec-week">Semana 16</span>
+  </div>
+
+  <div class="result-grid">
+    <div class="result-card result-go">
+      <div class="result-label" style="color:var(--teal)">✅ GO — Iniciar Fase 2 si:</div>
+      G7 reduce viabilidad ≥70% a 72h<br>
+      Apoptosis temprana >50% en citometría<br>
+      ATP cae >80% en G7 a 24h<br>
+      G7 estadísticamente mayor que G3 (p &lt;0.05)<br>
+      p-Akt indetectable (Gedatolisib funciona)<br>
+      CHOP elevado ≥2× vs control
+    </div>
+    <div class="result-card result-no">
+      <div class="result-label" style="color:var(--red)">⚠️ Replantear si:</div>
+      G7 ≈ G3 → GIK no añade valor → rediseñar sin GIK<br>
+      Ningún grupo supera 50% muerte → revisar línea celular o condiciones<br>
+      p-Akt sigue activo → ajustar dosis de Gedatolisib<br>
+      Alta necrosis (Q1 &gt; apoptosis) → reducir concentraciones<br><br>
+      <strong>El resultado negativo es publicable.</strong>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────
+       S10: MANUSCRITO
+  ───────────────────────────────── -->
+  <div id="s10" class="sec-header">
+    <span class="sec-num">10</span>
+    <span class="sec-title">Redacción del manuscrito — Semanas 18–24</span>
+    <span class="sec-week">Semanas 18–24</span>
+  </div>
+
+  <table class="data-table">
+    <thead><tr><th>Sección</th><th>Contenido clave</th><th>Figuras sugeridas</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Abstract</strong></td><td>Problema, hipótesis, modelo, hallazgo principal, conclusión</td><td>—</td></tr>
+      <tr><td><strong>Introducción</strong></td><td>Efecto Warburg, metabolismo en melanoma, GIK cardiológico, hipótesis del estrés letal, gap en la literatura</td><td>—</td></tr>
+      <tr><td><strong>Materiales & Métodos</strong></td><td>Basarte en este SOP. Todo reproducible.</td><td>—</td></tr>
+      <tr><td><strong>Resultados</strong></td><td>MTT curvas dosis-respuesta, ATP cinética, citometría cuadrantes, WB densitometría</td><td>Fig 1: Curvas MTT · Fig 2: ATP cinética · Fig 3: Citometría · Fig 4: WB</td></tr>
+      <tr><td><strong>Discusión</strong></td><td>Comparación con Chen et al. 2024, ¿añade GIK valor?, papel de PI3K/Akt, implicaciones para Fase 2</td><td>—</td></tr>
+      <tr><td><strong>Conclusiones</strong></td><td>Responde la pregunta central. Señala siguiente paso (nanovehículo o rediseño)</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px;padding:16px 20px;background:var(--ink);border-radius:10px;color:#f0ece4">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--teal);margin-bottom:8px">REVISTAS TARGET</div>
+    <div style="font-size:13px;line-height:1.8;color:#c8c4bc">
+      <strong style="color:#f0ece4">Opción 1:</strong> <em>Cancer Metabolism</em> (Springer) — IF 6.1 · Acceso abierto opcional · Perfil exacto<br>
+      <strong style="color:#f0ece4">Opción 2:</strong> <em>Frontiers in Oncology</em> · Acceso abierto · Revisión rápida (&lt;3 meses) · Buena visibilidad<br>
+      <strong style="color:#f0ece4">Opción 3:</strong> <em>Oncotarget</em> · Amplio alcance · Acepta estudios in vitro como primer reporte<br>
+      <strong style="color:#f0ece4">Opción budget:</strong> <em>PLOS ONE</em> · Acceso abierto · No juzga importancia, solo rigor metodológico
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+function toggleStep(id) {
+  const body = document.getElementById(id);
+  const toggle = document.getElementById(id + '-toggle');
+  body.classList.toggle('open');
+  if (toggle) toggle.textContent = body.classList.contains('open') ? '▴ colapsar' : '▾ expandir';
+}
+
+// Active sidebar on scroll
+const sections = document.querySelectorAll('[id^="s"]');
+const sbLinks = document.querySelectorAll('.sb-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 140) current = s.id; });
+  sbLinks.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
