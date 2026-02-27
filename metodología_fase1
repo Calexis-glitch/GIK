@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metodología Fase 1 — GIK & Melanoma</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0e15;
+  --surface: #12151f;
+  --surface2: #181c28;
+  --border: #222840;
+  --text: #dde2f0;
+  --muted: #6b748a;
+  --teal: #38c9a8;
+  --teal-dim: #1e6a58;
+  --gold: #d4a843;
+  --gold-dim: #7a5820;
+  --blue: #5b9cf6;
+  --blue-dim: #1e3a6a;
+  --red: #e86060;
+  --red-dim: #6a2020;
+  --purple: #b07aff;
+  --purple-dim: #3a1a6a;
+
+  /* Group colors */
+  --g1: #6b748a;
+  --g2: #d4a843;
+  --g3: #5b9cf6;
+  --g4: #e86060;
+  --g5: #38c9a8;
+  --g6: #b07aff;
+  --g7: #ff8c5a;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── SIDEBAR NAV ── */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 240px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 50;
+  padding: 28px 0;
+}
+
+.sidebar-logo {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.sidebar-logo .label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.sidebar-logo .title {
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.nav-section {
+  padding: 0 12px;
+  margin-bottom: 8px;
+}
+
+.nav-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.nav-link:hover, .nav-link.active {
+  background: rgba(56,201,168,0.08);
+  color: var(--teal);
+}
+
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: 240px;
+  padding: 0 48px 80px;
+  max-width: 960px;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 60px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 56px;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-family: 'Lora', serif;
+  font-size: clamp(26px, 3vw, 42px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.meta-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* ── PREGUNTA CENTRAL ── */
+.central-question {
+  background: linear-gradient(135deg, rgba(56,201,168,0.08), rgba(212,168,67,0.06));
+  border: 1px solid var(--teal-dim);
+  border-left: 4px solid var(--teal);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 48px;
+}
+
+.cq-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.cq-text {
+  font-family: 'Lora', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ── SECTION ── */
+.section { margin-bottom: 64px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  font-family: 'Lora', serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.25;
+  color: var(--teal);
+}
+
+.section-title {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── GROUP CARD ── */
+.group-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.group-card:hover {
+  border-color: #2a3050;
+}
+
+.gc-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.gc-badge {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lora', serif;
+  font-size: 17px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.gc-title-block { flex: 1; }
+
+.gc-group-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.gc-short {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.gc-toggle {
+  color: var(--muted);
+  font-size: 12px;
+  font-family: 'DM Mono', monospace;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.gc-header:hover .gc-toggle { color: var(--teal); }
+
+.gc-body {
+  padding: 0 22px 22px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+
+.gc-body.open { display: block; padding-top: 20px; }
+
+/* Sub-sections inside group card */
+.gc-block {
+  margin-bottom: 20px;
+}
+
+.gc-block-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gc-block-title::after {
+  content:'';
+  flex:1;
+  height:1px;
+  background: var(--border);
+}
+
+.rationale-box {
+  background: var(--surface2);
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #b0b8cc;
+}
+
+.formula-block {
+  background: #0a0c12;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12.5px;
+  color: #8af0d8;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+.formula-comment { color: var(--muted); }
+
+.doses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.dose-chip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.dose-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.dose-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.hypothesis-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: 'DM Mono', monospace;
+  margin-top: 10px;
+}
+
+.tag-go   { background: rgba(56,201,168,0.1); color: var(--teal); border: 1px solid rgba(56,201,168,0.3); }
+.tag-ref  { background: rgba(91,156,246,0.1); color: var(--blue); border: 1px solid rgba(91,156,246,0.3); }
+.tag-warn { background: rgba(212,168,67,0.1); color: var(--gold); border: 1px solid rgba(212,168,67,0.3); }
+.tag-key  { background: rgba(255,140,90,0.1); color: var(--g7); border: 1px solid rgba(255,140,90,0.3); }
+
+/* ── READOUTS ── */
+.readouts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.readouts-table th {
+  background: var(--surface2);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.readouts-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  vertical-align: top;
+}
+
+.readouts-table tr:last-child td { border-bottom: none; }
+.readouts-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ── ENSAYO GENERAL ── */
+.assay-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+
+.assay-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.assay-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.assay-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+
+.assay-body { font-size: 13.5px; color: #9aa0b8; line-height: 1.7; }
+
+.protocol-steps {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ps-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.ps-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
+  flex-shrink: 0;
+  color: var(--teal);
+  margin-top: 1px;
+}
+
+/* ── DECISION POINT ── */
+.decision-section {
+  background: linear-gradient(135deg, rgba(212,168,67,0.06), rgba(255,140,90,0.04));
+  border: 2px solid var(--gold-dim);
+  border-radius: 14px;
+  padding: 28px;
+  margin: 40px 0;
+}
+
+.ds-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ds-icon { font-size: 28px; }
+
+.ds-title {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.ds-sub { font-size: 13px; color: var(--muted); }
+
+.decision-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.dc-go {
+  background: rgba(56,201,168,0.06);
+  border: 1px solid rgba(56,201,168,0.3);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.dc-no {
+  background: rgba(232,96,96,0.06);
+  border: 1px solid rgba(232,96,96,0.3);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.dc-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.dc-body { font-size: 13px; line-height: 1.6; color: #9aa0b8; }
+
+/* ── COCTEL BREAKDOWN ── */
+.cocktail-visual {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.cv-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+
+.cv-icon { font-size: 22px; margin-bottom: 6px; }
+
+.cv-name {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.cv-role { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+/* ── BACK LINK ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--teal);
+  text-decoration: none;
+  margin-bottom: 16px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.back-link:hover { opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 24px 20px 60px; }
+  .decision-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="label">Fase 1 · In Vitro</div>
+    <div class="title">Metodología GIK + Melanoma</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Estructura</div>
+    <a class="nav-link active" href="#pregunta"><div class="nav-dot" style="background:var(--teal)"></div>Pregunta central</a>
+    <a class="nav-link" href="#grupos"><div class="nav-dot" style="background:var(--gold)"></div>Grupos experimentales</a>
+    <a class="nav-link" href="#ensayos"><div class="nav-dot" style="background:var(--blue)"></div>Ensayos principales</a>
+    <a class="nav-link" href="#decision"><div class="nav-dot" style="background:var(--g7)"></div>Punto de decisión</a>
+    <a class="nav-link" href="#logica"><div class="nav-dot" style="background:var(--purple)"></div>Lógica del diseño</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Grupos</div>
+    <a class="nav-link" href="#g1"><div class="nav-dot" style="background:var(--g1)"></div>G1 · Control negativo</a>
+    <a class="nav-link" href="#g2"><div class="nav-dot" style="background:var(--g2)"></div>G2 · GIK libre</a>
+    <a class="nav-link" href="#g3"><div class="nav-dot" style="background:var(--g3)"></div>G3 · Bloqueo energético</a>
+    <a class="nav-link" href="#g4"><div class="nav-dot" style="background:var(--g4)"></div>G4 · Bloqueo lípidos</a>
+    <a class="nav-link" href="#g5"><div class="nav-dot" style="background:var(--g5)"></div>G5 · GIK + energía</a>
+    <a class="nav-link" href="#g6"><div class="nav-dot" style="background:var(--g6)"></div>G6 · GIK + lípidos</a>
+    <a class="nav-link" href="#g7"><div class="nav-dot" style="background:var(--g7)"></div>G7 · Cóctel completo</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+    <a class="back-link" href="hub.html" style="margin-bottom:0">← Volver al hub</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="sop_fase1.html" style="display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--teal);text-decoration:none;border:1px solid rgba(56,201,168,0.3);padding:7px 14px;border-radius:6px;background:rgba(56,201,168,0.06);transition:all 0.15s" onmouseover="this.style.background='rgba(56,201,168,0.12)'" onmouseout="this.style.background='rgba(56,201,168,0.06)'">🧫 Protocolo SOP paso a paso →</a>
+      <a href="justificacion_fase1.html" style="display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--gold);text-decoration:none;border:1px solid rgba(212,168,67,0.3);padding:7px 14px;border-radius:6px;background:rgba(212,168,67,0.06);transition:all 0.15s" onmouseover="this.style.background='rgba(212,168,67,0.12)'" onmouseout="this.style.background='rgba(212,168,67,0.06)'">📖 Justificación científica →</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">Metodología detallada · Fase 1 · Meses 1–6</p>
+    <h1>Validación in vitro del<br>Concepto de Estrés Letal</h1>
+    <p class="hero-sub">Antes de invertir en síntesis de nanopartículas, debemos demostrar que el concepto metabólico funciona biológicamente en células B16F10 de melanoma. Esta fase responde una pregunta binaria y publícable independientemente.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><div class="meta-dot" style="background:var(--teal)"></div>Línea celular: B16F10 (ATCC CRL-6475)</div>
+      <div class="meta-item"><div class="meta-dot" style="background:var(--gold)"></div>Duración: 6 meses</div>
+      <div class="meta-item"><div class="meta-dot" style="background:var(--blue)"></div>7 grupos · 3 ensayos principales</div>
+      <div class="meta-item"><div class="meta-dot" style="background:var(--g7)"></div>Inversión: ~$3,972 USD</div>
+    </div>
+  </div>
+
+  <!-- PREGUNTA CENTRAL -->
+  <div id="pregunta" class="central-question">
+    <div class="cq-label">Pregunta central de la Fase 1</div>
+    <div class="cq-text">¿La sobrecarga glucolítica forzada por GIK, combinada con el bloqueo de todas las vías energéticas alternativas, induce muerte por colapso metabólico en células de melanoma B16F10, y lo hace mejor que el bloqueo energético solo?</div>
+  </div>
+
+  <!-- LÓGICA DEL DISEÑO -->
+  <div id="logica" class="section">
+    <div class="section-header">
+      <div class="section-num">I</div>
+      <div>
+        <div class="section-title">Lógica del diseño experimental</div>
+        <div class="section-subtitle">Por qué estos 7 grupos y no otros</div>
+      </div>
+    </div>
+
+    <p style="color:#9aa0b8;font-size:14px;line-height:1.8;margin-bottom:20px">
+      El diseño de grupos sigue una lógica de <strong style="color:var(--text)">deducción escalonada</strong>: cada grupo adicional responde exactamente una pregunta nueva, aislando el efecto de cada componente del cóctel. Si saltamos directamente a comparar el "control" vs. el "cóctel completo" sin grupos intermedios, no sabríamos a qué componente atribuir el efecto ni tendríamos un paper publicable. La estructura en 7 grupos nos da:
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--teal);margin-bottom:8px">PREGUNTA A</div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:6px">¿GIK sola tiene efecto?</div>
+        <div style="font-size:12.5px;color:var(--muted)">Comparando G2 vs G1. Si no lo tiene, confirmamos que la sobrecarga glucolítica sin bloqueos no es letal. Hipótesis esperada: efecto mínimo o nulo.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--blue);margin-bottom:8px">PREGUNTA B</div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:6px">¿El bloqueo energético solo es suficiente?</div>
+        <div style="font-size:12.5px;color:var(--muted)">Comparando G3 vs G1. Reproduce el estado del arte (Chen et al. 2024). Nuestro estándar de oro de comparación.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--g5);margin-bottom:8px">PREGUNTA C — LA MÁS IMPORTANTE</div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:6px">¿GIK añade valor al bloqueo?</div>
+        <div style="font-size:12.5px;color:var(--muted)">Comparando G5 vs G3. Si G5 > G3, GIK tiene efecto sinérgico. Si no, justificamos eliminarla del diseño del nanovehículo.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--g7);margin-bottom:8px">PREGUNTA D</div>
+        <div style="font-weight:600;font-size:14px;margin-bottom:6px">¿El bloqueo de PI3K/mTOR es necesario?</div>
+        <div style="font-size:12.5px;color:var(--muted)">Comparando G7 vs G6. Si G7 > G6, el Gedatolisib (bloqueador de la señal de supervivencia de la insulina) es esencial. Esto blinda el argumento ante revisores.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRUPOS EXPERIMENTALES -->
+  <div id="grupos" class="section">
+    <div class="section-header">
+      <div class="section-num">II</div>
+      <div>
+        <div class="section-title">Grupos experimentales — Justificación detallada</div>
+        <div class="section-subtitle">Haz clic en cada grupo para ver la metodología completa</div>
+      </div>
+    </div>
+
+    <!-- G1 -->
+    <div id="g1" class="group-card">
+      <div class="gc-header" onclick="toggleCard('g1-body')">
+        <div class="gc-badge" style="background:rgba(107,116,138,0.15);color:var(--g1);border:1px solid rgba(107,116,138,0.3)">1</div>
+        <div class="gc-title-block">
+          <div class="gc-group-name">Control Negativo</div>
+          <div class="gc-short">DMEM estándar · sin tratamiento activo · línea base absoluta</div>
+        </div>
+        <div class="gc-toggle">expandir ▾</div>
+      </div>
+      <div id="g1-body" class="gc-body open">
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g1)">¿Por qué existe este grupo?</div>
+          <div class="rationale-box" style="border-color:var(--g1)">
+            Es la referencia absoluta. Sin un control negativo, no podemos calcular el porcentaje de inhibición de ningún otro grupo. Nos dice cuántas células están vivas cuando <em>nada les pasa</em>, bajo las mismas condiciones de temperatura, CO₂ y tiempo de exposición. Cualquier reducción en viabilidad en los demás grupos se expresa como diferencia frente a este grupo. Si lo omitimos, el experimento no es interpretable.
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g1)">Condiciones exactas</div>
+          <div class="formula-block">
+            Medio: DMEM High Glucose comercial (5.5 mM glucosa) + 10% FBS + 1% P/S
+            <span class="formula-comment"><br>// Glucosa fisiológica estándar in vitro</span>
+            <br>Temperatura: 37°C · CO₂: 5% · Humedad: 95%
+            <br>Tiempos: 24h, 48h, 72h <span class="formula-comment">// mismo tiempo que todos los demás grupos</span>
+            <br>Solvente control: DMSO 0.1% v/v <span class="formula-comment">// controla toxicidad del solvente de inhibidores</span>
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g1)">Resultado esperado</div>
+          <div style="font-size:13.5px;color:#9aa0b8;line-height:1.7">Viabilidad del 100% (referencia). Las células B16F10 en condiciones estándar tienen tiempo de duplicación de ~18–20 horas, por lo que a 72h habrá proliferación activa. Este grupo establece el denominador de todos los cálculos de viabilidad relativa.</div>
+          <span class="hypothesis-tag tag-ref">📊 Referencia para todos los grupos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- G2 -->
+    <div id="g2" class="group-card">
+      <div class="gc-header" onclick="toggleCard('g2-body')">
+        <div class="gc-badge" style="background:rgba(212,168,67,0.15);color:var(--g2);border:1px solid rgba(212,168,67,0.3)">2</div>
+        <div class="gc-title-block">
+          <div class="gc-group-name">GIK Libre — Sobrecarga glucolítica pura</div>
+          <div class="gc-short">Glucosa alta + Insulina + K⁺ · Sin bloqueadores · Hipótesis del "apetito letal"</div>
+        </div>
+        <div class="gc-toggle">expandir ▾</div>
+      </div>
+      <div id="g2-body" class="gc-body">
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g2)">¿Por qué existe este grupo?</div>
+          <div class="rationale-box" style="border-color:var(--g2)">
+            Es el test directo de la hipótesis original: ¿puede la sobrecarga glucolítica matar células de melanoma por sí sola? La respuesta esperada es <strong>NO, o efecto mínimo</strong>, y eso es exactamente lo que necesitamos demostrar. Si este grupo mata bien, la hipótesis es correcta tal cual y no necesitamos el resto del cóctel. Si no mata, justificamos por qué necesitamos agregar los bloqueadores. En ambos casos, el resultado es publicable y necesario para la narrativa del proyecto. Además, replica parcialmente la lógica del estudio TGIK de Hill et al. (2005), nuestro único antecedente directo.
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g2)">Composición y dosis</div>
+          <div class="cocktail-visual">
+            <div class="cv-item">
+              <div class="cv-icon">🍬</div>
+              <div class="cv-name" style="color:var(--g2)">D-Glucosa</div>
+              <div class="cv-role">5 / 25 / 50 mM<br>en DMEM s/glucosa</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-icon">💉</div>
+              <div class="cv-name" style="color:var(--g2)">Insulina regular</div>
+              <div class="cv-role">0.1 / 0.5 / 1.0 U/mL<br>Humulin R</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-icon">⚡</div>
+              <div class="cv-name" style="color:var(--g2)">KCl</div>
+              <div class="cv-role">5 mM<br>(concentración fisiológica)</div>
+            </div>
+          </div>
+          <div class="formula-block" style="margin-top:12px">
+            Base: DMEM sin glucosa (Gibco 11966025) <span class="formula-comment">// para controlar exactamente cuánta glucosa añadimos</span>
+            <br>Glucosa añadida: 5 mM (control glucémico), 25 mM (hiperglucemia leve), 50 mM (hiperglucemia severa)
+            <br>Insulina: 0.1 U/mL, 0.5 U/mL, 1.0 U/mL
+            <br>KCl: 5 mM en todos los grupos GIK
+            <br><span class="formula-comment">// En total: 9 combinaciones (3 glucosa × 3 insulina) para mapear la superficie de respuesta</span>
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g2)">Justificación de las concentraciones</div>
+          <div style="font-size:13.5px;color:#9aa0b8;line-height:1.7">
+            <strong style="color:var(--text)">5 mM:</strong> Glucemia fisiológica normal. Control para confirmar que el DMEM s/glucosa no es tóxico per se.<br><br>
+            <strong style="color:var(--text)">25 mM:</strong> Hiperglucemia equivalente a diabetes severa (~450 mg/dL). Documentado en estudios in vitro como concentración que activa el Efecto Warburg acelerado.<br><br>
+            <strong style="color:var(--text)">50 mM:</strong> Hiperglucemia extrema. Concentración usada en estudios de "estrés glucotóxico" para inducir estrés de retículo endoplásmico. Es la dosis donde esperamos ver toxicidad si la hipótesis del apetito letal es correcta.
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g2)">¿Qué medimos?</div>
+          <table class="readouts-table">
+            <thead><tr><th>Ensayo</th><th>¿Qué informa?</th><th>Hipótesis</th></tr></thead>
+            <tbody>
+              <tr><td>MTT</td><td>Viabilidad global vs concentración glucosa</td><td>Esperamos ≤30% reducción incluso a 50 mM</td></tr>
+              <tr><td>Citometría Anexina V/PI</td><td>¿Muere por apoptosis o necrosis?</td><td>Si hay muerte: apoptosis temprana por estrés RE</td></tr>
+              <tr><td>ATP (CellTiter-Glo)</td><td>¿Cae la energía celular?</td><td>Caída parcial si 2-DG bloquea glucólisis — aquí NO usamos 2-DG</td></tr>
+              <tr><td>Western: p-Akt</td><td>¿La insulina activa PI3K/Akt?</td><td>Sí, confirma que la insulina protege a la célula</td></tr>
+            </tbody>
+          </table>
+          <span class="hypothesis-tag tag-warn">⚠️ Esperamos muerte mínima — esto JUSTIFICA añadir bloqueadores</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- G3 -->
+    <div id="g3" class="group-card">
+      <div class="gc-header" onclick="toggleCard('g3-body')">
+        <div class="gc-badge" style="background:rgba(91,156,246,0.15);color:var(--g3);border:1px solid rgba(91,156,246,0.3)">3</div>
+        <div class="gc-title-block">
+          <div class="gc-group-name">Bloqueo Energético Dual — Estándar de oro</div>
+          <div class="gc-short">2-DG + Metformina · Sin GIK · Replica Chen et al. 2024</div>
+        </div>
+        <div class="gc-toggle">expandir ▾</div>
+      </div>
+      <div id="g3-body" class="gc-body">
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g3)">¿Por qué existe este grupo?</div>
+          <div class="rationale-box" style="border-color:var(--g3)">
+            Este es nuestro <strong>estándar de oro bibliográfico</strong>. Replica la estrategia de bloqueo energético dual ya validada por Chen et al. (Acta Biomaterialia, 2024), que demostró eficacia antitumoral con esta combinación. Tiene dos funciones críticas: (1) confirmar que el sistema B16F10 en nuestras manos responde al bloqueo dual como describe la literatura —si no lo hace, hay un problema técnico en el laboratorio, no en la hipótesis—; (2) servir como comparador directo: cualquier grupo más complejo DEBE superar a este para justificarse. Si nuestro cóctel no supera al G3, no hay justificación para añadir complejidad.
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g3)">Composición y dosis</div>
+          <div class="cocktail-visual">
+            <div class="cv-item">
+              <div class="cv-icon">🚫</div>
+              <div class="cv-name" style="color:var(--g3)">2-DG</div>
+              <div class="cv-role">1 / 5 / 10 / 20 mM<br>Bloquea hexoquinasa</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-icon">⛔</div>
+              <div class="cv-name" style="color:var(--g3)">Metformina HCl</div>
+              <div class="cv-role">1 / 5 / 10 / 20 mM<br>Bloquea Complejo I</div>
+            </div>
+          </div>
+          <div class="formula-block" style="margin-top:12px">
+            2-DG en PBS estéril → stock 500 mM → diluir en DMEM
+            <br>Metformina en agua → stock 1 M → diluir en DMEM
+            <span class="formula-comment"><br>// Ambos agentes son hidrosolubles, sin necesidad de DMSO</span>
+            <br>Probar cada agente solo (para IC₅₀ individual) y combinados (ratio 1:1 molar)
+            <span class="formula-comment"><br>// La combinación 1:1 permite análisis de índice de combinación Chou-Talalay</span>
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g3)">Mecanismo que estamos bloqueando</div>
+          <div style="font-size:13.5px;color:#9aa0b8;line-height:1.7">
+            <strong style="color:var(--g3)">2-DG:</strong> Es un análogo de glucosa que la hexoquinasa convierte en 2-DG-6-fosfato, pero esta molécula NO puede continuar por la vía glucolítica. Se acumula intracelularmente e inhibe competitivamente a la hexoquinasa. La célula "cree" que tiene glucosa pero no puede usarla. Resultado: bloqueo de glucólisis y estrés de retículo endoplásmico por inhibición de glicosilación de proteínas.<br><br>
+            <strong style="color:var(--g3)">Metformina:</strong> Inhibe el Complejo I de la cadena respiratoria mitocondrial, bloqueando la producción de ATP por fosforilación oxidativa (OXPHOS). Las células cancerosas usan OXPHOS cuando la glucólisis está bloqueada; al inhibir ambas simultáneamente, no queda fuente energética viable.
+          </div>
+          <span class="hypothesis-tag tag-ref">📚 Referencia directa: Chen et al., Acta Biomaterialia 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- G4 -->
+    <div id="g4" class="group-card">
+      <div class="gc-header" onclick="toggleCard('g4-body')">
+        <div class="gc-badge" style="background:rgba(232,96,96,0.15);color:var(--g4);border:1px solid rgba(232,96,96,0.3)">4</div>
+        <div class="gc-title-block">
+          <div class="gc-group-name">Bloqueo Lipídico Dual — Anti-CD36 + Denifanstat</div>
+          <div class="gc-short">Captación externa + Síntesis interna bloqueadas · Sin GIK ni bloqueo energético</div>
+        </div>
+        <div class="gc-toggle">expandir ▾</div>
+      </div>
+      <div id="g4-body" class="gc-body">
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g4)">¿Por qué existe este grupo?</div>
+          <div class="rationale-box" style="border-color:var(--g4)">
+            El melanoma cutáneo tiene acceso directo a un microambiente rico en adipocitos (tejido subcutáneo dérmico). Múltiples estudios han demostrado transferencia directa de ácidos grasos desde adipocitos a células B16F10. Esto significa que <strong>el bloqueo energético solo puede ser insuficiente</strong> si el tumor puede usar lípidos como energía alternativa. Este grupo nos dice cuánto efecto tiene bloquear exclusivamente las vías lipídicas, sin tocar el metabolismo glucolítico. Si G4 > G3 en algunas métricas, confirma que los lípidos son una vía de escape crítica en melanoma, lo cual fortalece el argumento para incluir el bloqueo dual de lípidos en el cóctel completo. La evidencia clave: las células CD36+ de melanoma son las que inician metástasis (Cancer Discovery 2021).
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g4)">Composición</div>
+          <div class="cocktail-visual">
+            <div class="cv-item">
+              <div class="cv-icon">🛡️</div>
+              <div class="cv-name" style="color:var(--g4)">Anti-CD36</div>
+              <div class="cv-role">Bloquea captación<br>de ácidos grasos externos</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-icon">🔬</div>
+              <div class="cv-name" style="color:var(--g4)">Denifanstat (TVB-2640)</div>
+              <div class="cv-role">Bloquea síntesis de novo<br>vía FASN</div>
+            </div>
+          </div>
+          <div class="formula-block" style="margin-top:12px">
+            Anti-CD36 (JC63.1, Santa Cruz): 1–10 µg/mL en medio de cultivo
+            <span class="formula-comment"><br>// Añadir 30 min antes del experimento para saturar receptores</span>
+            <br>Denifanstat (TVB-2640): 0.1–10 µM (stock en DMSO 10 mM)
+            <span class="formula-comment"><br>// FASN inhibitor en ensayos clínicos Fase II, perfil de seguridad conocido</span>
+            <br>DMSO final: ≤0.1% v/v (controlado en G1)
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g4)">Por qué bloqueo DUAL de lípidos y no uno solo</div>
+          <div style="font-size:13.5px;color:#9aa0b8;line-height:1.7">
+            La revisión de <em>Precision Cancer Medicine</em> (2018) lo establece explícitamente: "la mera inhibición de la síntesis endógena de ácidos grasos por FASN ha demostrado ser inadecuada para reducir significativamente los niveles de ácidos grasos en células cancerosas". La razón es simple: si inhibimos FASN (síntesis interna), la célula compensa importando lípidos del medio vía CD36. Y al revés, si solo bloqueamos CD36, puede sintetizar sus propios. Necesitamos cortar ambas fuentes simultáneamente.
+          </div>
+          <span class="hypothesis-tag tag-warn">⚠️ Este grupo solo tiene sentido en el contexto de tumores en ambientes ricos en lípidos (melanoma cutáneo, hepático)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- G5 -->
+    <div id="g5" class="group-card">
+      <div class="gc-header" onclick="toggleCard('g5-body')">
+        <div class="gc-badge" style="background:rgba(56,201,168,0.15);color:var(--g5);border:1px solid rgba(56,201,168,0.3)">5</div>
+        <div class="gc-title-block">
+          <div class="gc-group-name">GIK + Bloqueo Energético — ¿La sobrecarga añade valor?</div>
+          <div class="gc-short">GIK + 2-DG + Metformina · El experimento diagnóstico central del proyecto</div>
+        </div>
+        <div class="gc-toggle">expandir ▾</div>
+      </div>
+      <div id="g5-body" class="gc-body">
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g5)">¿Por qué existe este grupo? — El más importante</div>
+          <div class="rationale-box" style="border-color:var(--g5)">
+            Este es el experimento que justifica todo el proyecto. Compara directamente G5 vs G3 (bloqueo dual solo). Si G5 > G3, significa que <strong>añadir GIK al bloqueo energético tiene un efecto sinérgico adicional</strong>, validando la hipótesis del "estrés letal por sobrecarga". Si G5 ≈ G3, significa que GIK no añade valor al bloqueo dual y debemos replantear su inclusión en el nanovehículo. Ambos resultados son publicables y valiosos. La narrativa científica del proyecto depende de este grupo.
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g5)">Composición completa</div>
+          <div class="cocktail-visual">
+            <div class="cv-item"><div class="cv-icon">🍬</div><div class="cv-name" style="color:var(--g2)">Glucosa</div><div class="cv-role">25–50 mM<br>sobrecarga</div></div>
+            <div class="cv-item"><div class="cv-icon">💉</div><div class="cv-name" style="color:var(--g2)">Insulina</div><div class="cv-role">0.5–1 U/mL<br>forzador de entrada</div></div>
+            <div class="cv-item"><div class="cv-icon">⚡</div><div class="cv-name" style="color:var(--g2)">K⁺ (KCl)</div><div class="cv-role">5 mM<br>estabilizador</div></div>
+            <div class="cv-item"><div class="cv-icon">🚫</div><div class="cv-name" style="color:var(--g3)">2-DG</div><div class="cv-role">IC₅₀ × 0.5<br>(dosis subóptima)</div></div>
+            <div class="cv-item"><div class="cv-icon">⛔</div><div class="cv-name" style="color:var(--g3)">Metformina</div><div class="cv-role">IC₅₀ × 0.5<br>(dosis subóptima)</div></div>
+          </div>
+          <div class="formula-block" style="margin-top:12px">
+            IMPORTANTE: 2-DG y Metformina se usan a dosis SUBÓPTIMAS (IC₅₀ × 0.5)
+            <span class="formula-comment"><br>// Razón: si usamos dosis maximales del bloqueo dual, cualquier efecto de GIK quedará enmascarado</span>
+            <span class="formula-comment"><br>// Con dosis subóptimas, hay "espacio" para ver si GIK potencia el efecto</span>
+            <br>GIK se añade a concentración que por sí sola NO tuvo efecto en G2
+            <span class="formula-comment"><br>// Esto garantiza que cualquier efecto adicional es sinergia real, no suma simple</span>
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g5)">La paradoja de la insulina — ¿Por qué la usamos si activa PI3K/Akt?</div>
+          <div style="font-size:13.5px;color:#9aa0b8;line-height:1.7">
+            Aquí está el razonamiento más delicado del proyecto. La insulina activa la vía PI3K/Akt, que es pro-supervivencia. Entonces, ¿por qué la incluimos? Por dos razones:<br><br>
+            <strong style="color:var(--text)">1. La insulina es el único agente que fuerza la entrada masiva de glucosa a las células.</strong> Sin insulina, la glucosa extra en el medio puede no ser internalizada eficientemente porque las células cancerosas, aunque tienen GLUT1 sobreexpresado, necesitan la señal insulínica para maximizar el transporte (especialmente en condiciones de bloqueo glucolítico simultáneo).<br><br>
+            <strong style="color:var(--text)">2. En G5, aún no usamos Gedatolisib (el bloqueador de PI3K/mTOR).</strong> Este grupo nos muestra qué tan eficiente es la insulina como "escudo protector" sin que lo bloqueemos. Comparando G5 vs G7 (que sí tiene Gedatolisib), veremos cuánto daño está haciendo ese escudo y cuánto ayuda eliminarlo.
+          </div>
+          <span class="hypothesis-tag tag-key">🔑 Este grupo valida o refuta la necesidad de incluir GIK en el cóctel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- G6 -->
+    <div id="g6" class="group-card">
+      <div class="gc-header" onclick="toggleCard('g6-body')">
+        <div class="gc-badge" style="background:rgba(176,122,255,0.15);color:var(--g6);border:1px solid rgba(176,122,255,0.3)">6</div>
+        <div class="gc-title-block">
+          <div class="gc-group-name">GIK + Energía + Lípidos — Sin neutralizar el escudo PI3K</div>
+          <div class="gc-short">GIK + 2-DG + Metformina + Anti-CD36 + Denifanstat · Falta solo Gedatolisib</div>
+        </div>
+        <div class="gc-toggle">expandir ▾</div>
+      </div>
+      <div id="g6-body" class="gc-body">
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g6)">¿Por qué existe este grupo?</div>
+          <div class="rationale-box" style="border-color:var(--g6)">
+            Este grupo cierra el penúltimo cerco metabólico. Bloquea glucólisis, OXPHOS y metabolismo lipídico (ambas fuentes), pero <strong>deja intacta la señal de supervivencia de la insulina (PI3K/Akt)</strong>. Su comparación con G7 (que añade Gedatolisib) nos dice exactamente cuánto daño hace la señal PI3K/Akt activada por la insulina. Esto responde directamente a la crítica más probable de los revisores: "el escudo de PI3K bloquea su terapia". Si G7 > G6, el Gedatolisib es esencial y el argumento queda blindado. Si G7 ≈ G6, el escudo no importa tanto porque los otros mecanismos de muerte son dominantes.
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g6)">Composición — 5 de los 6 componentes del cóctel final</div>
+          <div class="cocktail-visual">
+            <div class="cv-item"><div class="cv-icon">🍬</div><div class="cv-name" style="color:var(--g2)">GIK</div><div class="cv-role">Glucosa + Insulina + K⁺<br>mismas dosis que G5</div></div>
+            <div class="cv-item"><div class="cv-icon">🚫</div><div class="cv-name" style="color:var(--g3)">2-DG</div><div class="cv-role">Bloqueo glucólisis<br>IC₅₀ × 0.5</div></div>
+            <div class="cv-item"><div class="cv-icon">⛔</div><div class="cv-name" style="color:var(--g3)">Metformina</div><div class="cv-role">Bloqueo OXPHOS<br>IC₅₀ × 0.5</div></div>
+            <div class="cv-item"><div class="cv-icon">🛡️</div><div class="cv-name" style="color:var(--g4)">Anti-CD36</div><div class="cv-role">Bloqueo captación<br>lípidos externos</div></div>
+            <div class="cv-item"><div class="cv-icon">🔬</div><div class="cv-name" style="color:var(--g4)">Denifanstat</div><div class="cv-role">Bloqueo síntesis<br>interna (FASN)</div></div>
+            <div class="cv-item" style="opacity:0.35;border-style:dashed">
+              <div class="cv-icon">❌</div>
+              <div class="cv-name">Gedatolisib</div>
+              <div class="cv-role">AUSENTE en este grupo<br>(PI3K/mTOR activo)</div>
+            </div>
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g6)">¿Qué esperamos?</div>
+          <div style="font-size:13.5px;color:#9aa0b8;line-height:1.7">
+            Mayor reducción tumoral que G5 (confirmará que bloquear lípidos añade valor). Pero menor reducción que G7. La diferencia entre G6 y G7 cuantifica exactamente <strong>cuánto protege la señal PI3K/Akt activada por la insulina</strong>. Si la diferencia es grande (ej. G7 mata 80% vs G6 mata 50%), el Gedatolisib es indispensable. Si la diferencia es pequeña (ej. G7 mata 75% vs G6 mata 70%), podríamos simplificar el cóctel.
+          </div>
+          <span class="hypothesis-tag tag-key">🔑 Cuantifica la importancia del bloqueo PI3K/mTOR</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- G7 -->
+    <div id="g7" class="group-card" style="border-color:rgba(255,140,90,0.3)">
+      <div class="gc-header" onclick="toggleCard('g7-body')" style="background:rgba(255,140,90,0.04)">
+        <div class="gc-badge" style="background:rgba(255,140,90,0.2);color:var(--g7);border:1px solid rgba(255,140,90,0.5);box-shadow:0 0 12px rgba(255,140,90,0.2)">7</div>
+        <div class="gc-title-block">
+          <div class="gc-group-name" style="color:var(--g7)">★ Cóctel Completo — Hipótesis central</div>
+          <div class="gc-short">Todos los componentes · GIK + 2-DG + Met + Anti-CD36 + Denifanstat + Gedatolisib</div>
+        </div>
+        <div class="gc-toggle" style="color:var(--g7)">expandir ▾</div>
+      </div>
+      <div id="g7-body" class="gc-body">
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g7)">¿Qué hace cada componente y por qué todos son necesarios?</div>
+          <div class="cocktail-visual">
+            <div class="cv-item" style="border-color:rgba(212,168,67,0.4)">
+              <div class="cv-icon">🍬</div>
+              <div class="cv-name" style="color:var(--g2)">Glucosa (50 mM)</div>
+              <div class="cv-role"><strong>Sobrecarga.</strong> Inunda la célula de sustrato. Activa Efecto Warburg acelerado. Genera ROS y estrés osmótico cuando no puede ser metabolizada.</div>
+            </div>
+            <div class="cv-item" style="border-color:rgba(212,168,67,0.4)">
+              <div class="cv-icon">💉</div>
+              <div class="cv-name" style="color:var(--g2)">Insulina (1 U/mL)</div>
+              <div class="cv-role"><strong>Caballo de Troya.</strong> Maximiza la entrada de glucosa y GLUT. Activa PI3K/Akt (señal de supervivencia) — pero eso será neutralizado por Gedatolisib.</div>
+            </div>
+            <div class="cv-item" style="border-color:rgba(91,156,246,0.4)">
+              <div class="cv-icon">🚫</div>
+              <div class="cv-name" style="color:var(--g3)">2-DG (10 mM)</div>
+              <div class="cv-role"><strong>Trampa.</strong> Bloquea hexoquinasa. La glucosa entra masivamente pero no puede metabolizarse. Se acumula como 2-DG-6P tóxico. Estrés RE garantizado.</div>
+            </div>
+            <div class="cv-item" style="border-color:rgba(91,156,246,0.4)">
+              <div class="cv-icon">⛔</div>
+              <div class="cv-name" style="color:var(--g3)">Metformina (10 mM)</div>
+              <div class="cv-role"><strong>Bloqueo plan B.</strong> Sin OXPHOS como escape, la célula no puede compensar el bloqueo glucolítico. ATP colapsa sin compensación posible.</div>
+            </div>
+            <div class="cv-item" style="border-color:rgba(232,96,96,0.4)">
+              <div class="cv-icon">🛡️</div>
+              <div class="cv-name" style="color:var(--g4)">Anti-CD36 (5 µg/mL)</div>
+              <div class="cv-role"><strong>Bloqueo plan C externo.</strong> Impide que adipocitos vecinos "rescaten" al tumor con ácidos grasos. Clave en melanoma dérmico.</div>
+            </div>
+            <div class="cv-item" style="border-color:rgba(232,96,96,0.4)">
+              <div class="cv-icon">🔬</div>
+              <div class="cv-name" style="color:var(--g4)">Denifanstat (5 µM)</div>
+              <div class="cv-role"><strong>Bloqueo plan C interno.</strong> Impide síntesis de ácidos grasos de novo. Elimina el último combustible alternativo.</div>
+            </div>
+            <div class="cv-item" style="border-color:rgba(255,140,90,0.5);background:rgba(255,140,90,0.06)">
+              <div class="cv-icon">🔓</div>
+              <div class="cv-name" style="color:var(--g7)">Gedatolisib (100 nM)</div>
+              <div class="cv-role"><strong>Neutraliza el escudo.</strong> Bloquea PI3K y mTOR simultáneamente. Elimina la señal de supervivencia activada por la insulina. La célula queda expuesta y sin defensas.</div>
+            </div>
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g7)">La lógica de la secuencia</div>
+          <div class="rationale-box" style="border-color:var(--g7)">
+            El diseño del cóctel sigue una lógica de "cercar y eliminar". Primero <strong>alimentamos forzadamente</strong> al tumor con glucosa e insulina. Luego <strong>bloqueamos la salida</strong>: la glucosa entra pero no puede usarse (2-DG bloquea glucólisis), ni puede usarse la mitocondria (metformina), ni puede usar lípidos externos (Anti-CD36) ni sintetizarlos (Denifanstat). La célula intenta activar sus defensas vía PI3K/Akt, pero Gedatolisib corta esa señal. El resultado: la célula está sobrealimentada, sin capacidad de usar ningún nutriente, y sin señales de supervivencia. Es una muerte por colapso metabólico total.
+          </div>
+        </div>
+        <div class="gc-block">
+          <div class="gc-block-title" style="color:var(--g7)">Resultados esperados — los que justifican la Fase 2</div>
+          <table class="readouts-table">
+            <thead><tr><th>Ensayo</th><th>Resultado esperado en G7</th><th>Importancia</th></tr></thead>
+            <tbody>
+              <tr><td>MTT 72h</td><td>Viabilidad ≤20% vs control (>80% muerte)</td><td>Eficacia superior a G3 (estándar de oro)</td></tr>
+              <tr><td>Citometría Anexina V/PI</td><td>>60% apoptosis temprana/tardía</td><td>Confirma mecanismo apoptótico, no necrosis inespecífica</td></tr>
+              <tr><td>ATP intracelular</td><td>Caída >90% vs control a 24h</td><td>Prueba directa de colapso metabólico total</td></tr>
+              <tr><td>Western: p-Akt</td><td>p-Akt indetectable (Gedatolisib efectivo)</td><td>Blinda argumento vs revisores sobre escudo PI3K</td></tr>
+              <tr><td>Western: CHOP</td><td>CHOP elevado (>3× control)</td><td>Confirma estrés RE como mecanismo contribuyente</td></tr>
+              <tr><td>ROS (DCFDA)</td><td>ROS >200% vs control</td><td>Valida hipótesis de estrés oxidativo por sobrecarga</td></tr>
+              <tr><td>Índice de combinación (CI)</td><td>CI < 0.7 (sinergia)</td><td>Demuestra que los componentes son sinérgicos, no aditivos</td></tr>
+            </tbody>
+          </table>
+          <span class="hypothesis-tag tag-key" style="margin-right:8px">★ Si G7 supera a G3 en ≥2 métricas → Fase 2 justificada</span>
+          <span class="hypothesis-tag tag-go">✅ Resultado positivo = publicación + nanovehículo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENSAYOS -->
+  <div id="ensayos" class="section">
+    <div class="section-header">
+      <div class="section-num">III</div>
+      <div>
+        <div class="section-title">Los 4 ensayos principales y por qué cada uno</div>
+        <div class="section-subtitle">Orden de ejecución: MTT → ATP → Citometría → Western Blot</div>
+      </div>
+    </div>
+
+    <div class="assay-card">
+      <div class="assay-header">
+        <div class="assay-title">① Ensayo MTT — Viabilidad metabólica</div>
+        <div class="assay-badge" style="background:rgba(56,201,168,0.1);color:var(--teal);border:1px solid rgba(56,201,168,0.3)">SEMANAS 4–6 · Primer ensayo</div>
+      </div>
+      <div class="assay-body">
+        <strong style="color:var(--text)">¿Qué mide?</strong> La reducción del reactivo MTT (bromuro de 3-[4,5-dimetiltiazol-2-il]-2,5-difeniltetrazolium) por las deshidrogenasas mitocondriales activas. Solo las células metabólicamente activas (vivas) pueden hacer esta reducción, generando un cristal formazán morado medible a 570 nm. Es el tamizaje inicial de eficacia: nos dice si el tratamiento reduce la "actividad metabólica" de la población celular.<br><br>
+        <strong style="color:var(--text)">Por qué es el PRIMER ensayo:</strong> Es barato (~$55 USD el reactivo para 200+ placas), rápido (lectura en lector de placas en minutos) y nos da la IC₅₀ de cada agente y combinación, que es la información que necesitamos para diseñar correctamente los ensayos más costosos (citometría y Western Blot). Sin saber la IC₅₀, podríamos desperdiciar anticuerpos costosos en condiciones que no funcionan.
+      </div>
+      <div class="protocol-steps">
+        <div class="ps-item"><div class="ps-num">01</div>Sembrar 5,000 células/pocillo en placa 96 pocillos. 24h para adhesión.</div>
+        <div class="ps-item"><div class="ps-num">02</div>Añadir tratamiento: remplazar medio por DMEM con el agente a las concentraciones definidas.</div>
+        <div class="ps-item"><div class="ps-num">03</div>Incubar 24h, 48h y 72h (tiempo separados, no secuenciales en la misma placa).</div>
+        <div class="ps-item"><div class="ps-num">04</div>Al finalizar cada tiempo: añadir MTT 0.5 mg/mL (10 µL/pocillo). Incubar 4h a 37°C.</div>
+        <div class="ps-item"><div class="ps-num">05</div>Retirar sobrenadante con cuidado. Disolver cristales con 100 µL DMSO por pocillo.</div>
+        <div class="ps-item"><div class="ps-num">06</div>Leer absorbancia 570 nm (referencia 690 nm) en lector de placas microELISA.</div>
+        <div class="ps-item"><div class="ps-num">07</div>Calcular % viabilidad = (Abs muestra / Abs control) × 100. IC₅₀ por regresión no lineal en GraphPad.</div>
+        <div class="ps-item"><div class="ps-num">08</div>Repetir experimento completo ×3 (réplicas biológicas independientes). n = 6 pocillos por condición.</div>
+      </div>
+    </div>
+
+    <div class="assay-card">
+      <div class="assay-header">
+        <div class="assay-title">② CellTiter-Glo® — ATP intracelular (medición directa de colapso energético)</div>
+        <div class="assay-badge" style="background:rgba(212,168,67,0.1);color:var(--gold);border:1px solid rgba(212,168,67,0.3)">SEMANAS 6–8 · Ensayo mecanístico clave</div>
+      </div>
+      <div class="assay-body">
+        <strong style="color:var(--text)">¿Por qué es crítico para esta hipótesis en particular?</strong> El MTT mide actividad mitocondrial general. El CellTiter-Glo mide ATP directamente mediante una reacción de luciferina-luciferasa: a más ATP, más luz. Si nuestra hipótesis es correcta (colapso metabólico por bloqueo de todas las fuentes energéticas), el ATP debe caer significativamente y más en G7 que en cualquier otro grupo. <strong>Una caída de ATP >90% es la evidencia más directa posible de que el mecanismo de muerte es metabólico.</strong> Esto además permite análisis cinético (6h, 12h, 24h) para ver cuándo colapsa la energía y si coincide con el inicio de apoptosis.
+      </div>
+      <div class="protocol-steps">
+        <div class="ps-item"><div class="ps-num">01</div>Tratamiento en placa de 96 pocillos blanca (opaca) → mismas condiciones que MTT.</div>
+        <div class="ps-item"><div class="ps-num">02</div>Tiempos: 6h, 12h, 24h (cinética) para ver cuándo colapsa el ATP.</div>
+        <div class="ps-item"><div class="ps-num">03</div>Equilibrar placa y reactivo CellTiter-Glo a temperatura ambiente 30 min.</div>
+        <div class="ps-item"><div class="ps-num">04</div>Añadir volumen igual de reactivo al medio (ej. 100 µL reactivo + 100 µL medio).</div>
+        <div class="ps-item"><div class="ps-num">05</div>Agitar 2 min (lisis celular), incubar 10 min en oscuridad.</div>
+        <div class="ps-item"><div class="ps-num">06</div>Leer luminiscencia en luminómetro o lector de placas multimodal.</div>
+        <div class="ps-item"><div class="ps-num">07</div>Normalizar vs control (100% ATP). Curva cinética por grupo.</div>
+      </div>
+    </div>
+
+    <div class="assay-card">
+      <div class="assay-header">
+        <div class="assay-title">③ Citometría de flujo — Anexina V / Ioduro de Propidio (apoptosis vs necrosis)</div>
+        <div class="assay-badge" style="background:rgba(176,122,255,0.1);color:var(--purple);border:1px solid rgba(176,122,255,0.3)">SEMANAS 6–8 · Caracterización del tipo de muerte</div>
+      </div>
+      <div class="assay-body">
+        <strong style="color:var(--text)">¿Por qué distinguir apoptosis de necrosis?</strong> Una terapia que mata por necrosis es un problema: la necrosis libera DAMPs (patrones moleculares de daño), que pueden causar inflamación sistémica no deseada. La apoptosis es "muerte limpia". Además, la muerte celular inmunogénica (ICD), que puede activar la respuesta inmune adaptativa, requiere una apoptosis específica. El perfil Anexina V+ / PI- (apoptosis temprana) es lo que buscamos. La Anexina V detecta fosfatidilserina externalizada (marcador temprano de apoptosis); el PI penetra solo células con membrana rota (necrosis o apoptosis tardía).
+      </div>
+      <div class="protocol-steps">
+        <div class="ps-item"><div class="ps-num">01</div>Tratamiento en placa 6 pocillos (200,000 células/pocillo). Tiempos: 24h y 48h.</div>
+        <div class="ps-item"><div class="ps-num">02</div>Recuperar células: sobrenadante + tripsinización (capturar células muertas flotantes).</div>
+        <div class="ps-item"><div class="ps-num">03</div>Lavar ×2 con PBS frío. Resuspender en 100 µL buffer de unión 1×.</div>
+        <div class="ps-item"><div class="ps-num">04</div>Añadir 5 µL Anexina V-FITC + 5 µL PI. Incubar 15 min a temperatura ambiente, oscuridad.</div>
+        <div class="ps-item"><div class="ps-num">05</div>Añadir 400 µL buffer de unión. Adquirir en citómetro de flujo dentro de 1h.</div>
+        <div class="ps-item"><div class="ps-num">06</div>Adquirir ≥10,000 eventos por muestra. Análisis en FlowJo: 4 cuadrantes (Q1–Q4).</div>
+        <div class="ps-item"><div class="ps-num">07</div>Q4 (Anx+/PI-): apoptosis temprana. Q2 (Anx+/PI+): apoptosis tardía. Q1 (Anx-/PI+): necrosis.</div>
+      </div>
+    </div>
+
+    <div class="assay-card">
+      <div class="assay-header">
+        <div class="assay-title">④ Western Blot — Validación molecular del mecanismo</div>
+        <div class="assay-badge" style="background:rgba(232,96,96,0.1);color:var(--red);border:1px solid rgba(232,96,96,0.3)">SEMANAS 10–14 · Solo si MTT y citometría son positivos</div>
+      </div>
+      <div class="assay-body">
+        <strong style="color:var(--text)">¿Por qué hacer Western Blot si ya tenemos viabilidad y apoptosis?</strong> El WB eleva el trabajo de "observamos muerte celular" a "entendemos exactamente por qué muere y el mecanismo que proponemos opera". Esto es indispensable para publicar en revistas de alto impacto. Sin WB, el revisor preguntará: "¿cómo saben que no es toxicidad inespecífica?". Con WB, respondemos: "Gedatolisib bloqueó efectivamente p-Akt (p-Akt indetectable), CHOP se elevó 3× confirmando estrés RE, y caspasa-3 clivada confirma apoptosis intrínseca. El mecanismo propuesto opera exactamente como se planteó."
+      </div>
+      <div class="protocol-steps">
+        <div class="ps-item"><div class="ps-num">01</div>Tratamiento en placa 6 pocillos con los grupos más informativos (G1, G2, G3, G5, G6, G7).</div>
+        <div class="ps-item"><div class="ps-num">02</div>Lisis con buffer RIPA + inhibidores de proteasa/fosfatasa. Cuantificación proteica (BCA).</div>
+        <div class="ps-item"><div class="ps-num">03</div>SDS-PAGE: 30 µg proteína por carril, geles 10–12%. Transferencia a membrana PVDF.</div>
+        <div class="ps-item"><div class="ps-num">04</div>Bloqueo con leche 5% en TBST, 1h temperatura ambiente.</div>
+        <div class="ps-item"><div class="ps-num">05</div>Anticuerpos primarios overnight a 4°C: p-Akt (Ser473), t-Akt, CHOP, Caspasa-3 clivada, p-AMPK, β-Actina.</div>
+        <div class="ps-item"><div class="ps-num">06</div>Anticuerpos secundarios HRP 1h temperatura ambiente. Revelado con ECL. Imagen en ChemiDoc.</div>
+        <div class="ps-item"><div class="ps-num">07</div>Densitometría con ImageJ. Normalización vs β-Actina. Expresar como fold-change vs control.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUNTO DE DECISION -->
+  <div id="decision">
+    <div class="decision-section">
+      <div class="ds-header">
+        <div class="ds-icon">🔀</div>
+        <div>
+          <div class="ds-title">Punto de decisión — Semana 16</div>
+          <div class="ds-sub">Con todos los datos de Fase 1, ¿avanzamos a síntesis de nanopartículas o replanteamos?</div>
+        </div>
+      </div>
+      <p style="font-size:14px;color:#9aa0b8;line-height:1.7;margin-bottom:16px">Este es el momento más importante del proyecto. Con ~$3,972 USD invertidos, tomamos la decisión que determina si gastamos otros $30,000–40,000 USD en Fases 2 y 3. Los criterios de decisión son:</p>
+      <div class="decision-grid">
+        <div class="dc-go">
+          <div class="dc-label" style="color:var(--teal)">✅ GO — Avanzar a Fase 2 si se cumplen ≥3 de:</div>
+          <div class="dc-body">
+            • G7 reduce viabilidad ≥70% a 72h (MTT)<br>
+            • Apoptosis temprana >50% en G7 (citometría)<br>
+            • ATP cae >80% en G7 a 24h (CellTiter-Glo)<br>
+            • p-Akt indetectable en G7 (Gedatolisib efectivo)<br>
+            • CHOP elevado ≥2× en G7 (estrés RE)<br>
+            • G7 estadísticamente superior a G3 (bloqueo dual solo) con p &lt; 0.05
+          </div>
+        </div>
+        <div class="dc-no">
+          <div class="dc-label" style="color:var(--red)">⚠️ REPLANTEAR si:</div>
+          <div class="dc-body">
+            • G7 ≈ G3 → GIK no añade valor: rediseñar sin GIK, evaluar si NP es necesaria<br>
+            • G7 > G3 pero G7 ≈ G6 → Gedatolisib no importante: simplificar cóctel<br>
+            • Ningún grupo supera 50% muerte → problema con línea celular o condiciones<br>
+            • p-Akt sigue activo en G7 → Gedatolisib no llega al blanco o dosis incorrecta<br><br>
+            <strong>El resultado negativo es publicable:</strong> "GIK no añade valor sinérgico al bloqueo metabólico dual en melanoma B16F10" es un hallazgo importante que ahorra recursos a otros investigadores.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function toggleCard(id) {
+  const body = document.getElementById(id);
+  body.classList.toggle('open');
+  const header = body.previousElementSibling;
+  const toggle = header.querySelector('.gc-toggle');
+  toggle.textContent = body.classList.contains('open') ? 'colapsar ▴' : 'expandir ▾';
+}
+
+// Highlight active nav link on scroll
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
