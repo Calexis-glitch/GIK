@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Justificación Científica — Fase 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0d0b;
+  --surface: #161410;
+  --card: #1c1a16;
+  --border: #2a2720;
+  --border2: #352f28;
+  --text: #e8e0d0;
+  --text2: #a09080;
+  --text3: #6a6058;
+  --teal: #3ecfa8;
+  --teal-dim: rgba(62,207,168,0.12);
+  --gold: #d4a843;
+  --gold-dim: rgba(212,168,67,0.12);
+  --red: #e05050;
+  --red-dim: rgba(224,80,80,0.1);
+  --blue: #5b9cf6;
+  --blue-dim: rgba(91,156,246,0.1);
+  --purple: #a87de8;
+  --purple-dim: rgba(168,125,232,0.1);
+  --orange: #e07840;
+  --orange-dim: rgba(224,120,64,0.1);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── HEADER ── */
+.hero {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 60px 0 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(62,207,168,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.hero-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-label::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--teal);
+  opacity: 0.5;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: var(--text2);
+  max-width: 620px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.meta-chip {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 1px;
+  border: 1px solid var(--border2);
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+/* ── LAYOUT ── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+}
+
+/* ── NAVIGATION ── */
+.toc {
+  margin: 40px 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+}
+
+.toc-title {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text2);
+  font-size: 13px;
+  transition: all 0.15s;
+}
+
+.toc-item:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.toc-num {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  color: var(--text3);
+  width: 24px;
+  flex-shrink: 0;
+}
+
+/* ── SECTION ── */
+.sec {
+  margin-top: 64px;
+}
+
+.sec-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.sec-num {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--text3);
+}
+
+.sec-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.sec h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.sec-lead {
+  font-size: 15.5px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 760px;
+}
+
+/* ── ARGUMENT BLOCK ── */
+.arg {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.arg-q {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.arg-a {
+  font-size: 14.5px;
+  color: var(--text2);
+  line-height: 1.75;
+}
+
+.arg-a strong { color: var(--text); }
+
+.arg-tag {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* ── COMPARISON TABLE ── */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 13.5px;
+}
+
+.cmp-table th {
+  background: var(--border);
+  color: var(--text2);
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.cmp-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.cmp-table td strong { color: var(--text); }
+.cmp-table tr:last-child td { border-bottom: none; }
+.cmp-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.tag-yes { color: var(--teal); font-family: 'Source Code Pro', monospace; font-size: 11px; }
+.tag-no  { color: var(--red);  font-family: 'Source Code Pro', monospace; font-size: 11px; }
+.tag-par { color: var(--gold); font-family: 'Source Code Pro', monospace; font-size: 11px; }
+
+/* ── DOSE JUSTIFICATION ── */
+.dose-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.dose-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.dose-drug {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.dose-range {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dose-why {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.dose-why strong { color: var(--text); }
+
+.dose-ref {
+  margin-top: 8px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
+/* ── N JUSTIFICATION ── */
+.n-box {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 20px 0;
+}
+
+.n-title {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.n-formula {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12.5px;
+  line-height: 1.9;
+  margin: 12px 0;
+  color: var(--text2);
+}
+
+.n-formula .hl { color: var(--teal); }
+.n-formula .comment { color: var(--text3); font-style: italic; }
+
+/* ── HIGHLIGHT QUOTE ── */
+.pullquote {
+  border-left: 3px solid var(--gold);
+  padding: 16px 20px;
+  margin: 24px 0;
+  background: var(--gold-dim);
+  border-radius: 0 8px 8px 0;
+}
+
+.pullquote p {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1.6;
+}
+
+.pullquote cite {
+  display: block;
+  margin-top: 8px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text3);
+  font-style: normal;
+}
+
+/* ── LOGIC CHAIN ── */
+.chain {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 20px 0;
+}
+
+.chain-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  position: relative;
+}
+
+.chain-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 32px;
+}
+
+.chain-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.chain-connector {
+  width: 1px;
+  flex: 1;
+  min-height: 20px;
+  background: var(--border2);
+  margin: 4px 0;
+}
+
+.chain-content {
+  padding: 6px 0 24px;
+  flex: 1;
+}
+
+.chain-title {
+  font-weight: 600;
+  font-size: 14.5px;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.chain-body {
+  font-size: 13.5px;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+/* ── EXPERIMENT CARD ── */
+.exp-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.exp-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.exp-badge {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.exp-name {
+  font-weight: 600;
+  font-size: 15px;
+  flex: 1;
+}
+
+.exp-verdict {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+.exp-body {
+  padding: 20px;
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.exp-col-title {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.exp-col-body {
+  font-size: 13.5px;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+.exp-col-body strong { color: var(--text); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 680px) {
+  .hero h1 { font-size: 30px; }
+  .page, .hero-inner { padding-left: 20px; padding-right: 20px; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .dose-grid { grid-template-columns: 1fr; }
+  .exp-body { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Documento de justificación científica</div>
+    <h1>¿Por qué <em>estos</em> experimentos<br>y no otros?</h1>
+    <p class="hero-sub">Fundamento científico completo de cada decisión de diseño en la Fase 1: elección de ensayos, concentraciones, número de réplicas y secuencia experimental. Escrito para responder preguntas de comité doctoral.</p>
+    <div class="hero-meta">
+      <span class="meta-chip">Fase 1 · In vitro · B16F10</span>
+      <span class="meta-chip">4 ensayos principales</span>
+      <span class="meta-chip">7 grupos experimentales</span>
+      <span class="meta-chip">Presupuesto $3,972 USD</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">Índice de justificaciones</div>
+    <div class="toc-grid">
+      <a href="#j1" class="toc-item"><span class="toc-num">01</span> ¿Por qué in vitro antes que animales?</a>
+      <a href="#j2" class="toc-item"><span class="toc-num">02</span> ¿Por qué exactamente estos 4 ensayos?</a>
+      <a href="#j3" class="toc-item"><span class="toc-num">03</span> ¿Por qué esas concentraciones y no otras?</a>
+      <a href="#j4" class="toc-item"><span class="toc-num">04</span> ¿Por qué n=6 réplicas por pocillo?</a>
+      <a href="#j5" class="toc-item"><span class="toc-num">05</span> ¿Por qué ese orden de experimentos?</a>
+      <a href="#j6" class="toc-item"><span class="toc-num">06</span> ¿Por qué esos 7 grupos y no más o menos?</a>
+      <a href="#j7" class="toc-item"><span class="toc-num">07</span> ¿Por qué B16F10 y no otra línea?</a>
+      <a href="#j8" class="toc-item"><span class="toc-num">08</span> ¿Por qué esos tiempos (24h, 48h, 72h)?</a>
+      <a href="#j9" class="toc-item"><span class="toc-num">09</span> Lo que este diseño NO puede responder</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       J1: POR QUÉ IN VITRO
+  ═══════════════════════════ -->
+  <div id="j1" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">01</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>¿Por qué empezar in vitro<br>y no directamente en ratones?</h2>
+    <p class="sec-lead">Esta es probablemente la primera pregunta que hará cualquier revisor o comité. La respuesta no es "porque es más fácil" — es una decisión estratégica con tres argumentos científicos, uno ético y uno económico.</p>
+
+    <div class="arg">
+      <span class="arg-tag" style="background:var(--teal-dim);color:var(--teal)">Argumento científico</span>
+      <div class="arg-q">"¿Por qué no saltar directo al modelo animal si ya tienen antecedentes de GIK intratumoral en B16F10?"</div>
+      <div class="arg-a">
+        Los antecedentes que existen (Hill et al. 2005) usaron GIK <strong>sin los bloqueadores energéticos</strong>. Tu hipótesis propone un mecanismo completamente diferente: no solo GIK como inmunoestimulante, sino el <strong>colapso metabólico por sobrecarga + bloqueo simultáneo de todas las vías energéticas</strong>. Este mecanismo nunca ha sido probado. Ir directamente a ratones con un mecanismo no validado significaría usar 10 animales por grupo × 8 grupos = 80 ratones para probar algo que podría fallar en la primera placa de 96 pocillos. In vitro primero permite fallar rápido y barato.
+      </div>
+    </div>
+
+    <div class="arg">
+      <span class="arg-tag" style="background:var(--blue-dim);color:var(--blue)">Argumento económico</span>
+      <div class="arg-q">"¿Cuánto ahorras al hacer Fase 1 antes de Fase 3?"</div>
+      <div class="arg-a">
+        Fase 1 completa cuesta <strong>~$3,972 USD</strong>. La Fase 3 animal cuesta <strong>~$35,000–40,000 USD</strong>. Si el concepto metabólico no funciona en placa, Fase 1 te lo dice en 4 meses con una fracción del presupuesto. Sin Fase 1, podrías gastar 10 veces más para descubrir lo mismo. Este argumento es especialmente relevante para financiamiento en México, donde los recursos son limitados.
+      </div>
+    </div>
+
+    <div class="arg">
+      <span class="arg-tag" style="background:var(--gold-dim);color:var(--gold)">Principio 3R (ético)</span>
+      <div class="arg-q">"¿Tienen alguna obligación ética de hacer in vitro primero?"</div>
+      <div class="arg-a">
+        Sí. El principio de las <strong>3R (Reemplazar, Reducir, Refinar)</strong> — reconocido internacionalmente y requerido por CONACYT y la mayoría de comités de ética animal — establece que los experimentos animales deben justificarse mostrando que no existen alternativas in vitro suficientes. Hacer Fase 1 no es solo buena ciencia: es un <strong>requisito ético y regulatorio</strong> para poder justificar el uso de animales en Fase 3.
+      </div>
+    </div>
+
+    <div class="arg">
+      <span class="arg-tag" style="background:var(--purple-dim);color:var(--purple)">Argumento de dosis</span>
+      <div class="arg-q">"¿Qué información crítica necesitas de Fase 1 para hacer bien Fase 3?"</div>
+      <div class="arg-a">
+        Sin Fase 1, no sabes las dosis óptimas de cada fármaco para esta línea celular específica. Los IC₅₀ obtenidos en MTT son la base para calcular las dosis in vivo. Ir a animales sin IC₅₀ in vitro significa elegir dosis arbitrariamente, lo que puede producir toxicidad sistémica o sub-dosificación — ambos invalidan el experimento.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       J2: POR QUÉ ESOS 4 ENSAYOS
+  ═══════════════════════════ -->
+  <div id="j2" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">02</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>¿Por qué exactamente estos 4 ensayos<br>y no otros?</h2>
+    <p class="sec-lead">Cada ensayo responde una pregunta específica que el anterior no puede responder. No son redundantes — son complementarios y jerárquicos.</p>
+
+    <div class="pullquote">
+      <p>"El error más común en diseño experimental es usar cuatro ensayos que miden lo mismo con diferente tecnología. El diseño correcto usa cuatro ensayos que cada uno cierra un gap que el anterior deja abierto."</p>
+      <cite>Principio de diseño experimental jerárquico</cite>
+    </div>
+
+    <div class="chain">
+      <div class="chain-item">
+        <div class="chain-left">
+          <div class="chain-dot" style="background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal)">1</div>
+          <div class="chain-connector"></div>
+        </div>
+        <div class="chain-content">
+          <div class="chain-title">MTT — "¿Las células mueren?"</div>
+          <div class="chain-body">
+            Es el ensayo más barato (~$55 USD) y rápido. Mide actividad de deshidrogenasas mitocondriales como proxy de viabilidad. <strong>Gap que deja:</strong> solo sabe que algo malo le pasa a la célula, no QUÉ le pasa. ¿Murió por apoptosis? ¿Por necrosis? ¿Simplemente dejó de proliferar? Tampoco mide energía directamente — solo viabilidad metabólica general.
+          </div>
+        </div>
+      </div>
+
+      <div class="chain-item">
+        <div class="chain-left">
+          <div class="chain-dot" style="background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold)">2</div>
+          <div class="chain-connector"></div>
+        </div>
+        <div class="chain-content">
+          <div class="chain-title">CellTiter-Glo (ATP) — "¿Colapsó el metabolismo energético?"</div>
+          <div class="chain-body">
+            Mide ATP intracelular directamente con reacción luciferina-luciferasa. Este ensayo es el único que puede probar el mecanismo central de tu hipótesis: que las células literalmente se quedan sin energía. <strong>Gap que deja:</strong> sabe que no hay ATP pero no distingue si las células están en apoptosis temprana, tardía, o necrosis — solo sabe que están muriendo metabólicamente.
+          </div>
+        </div>
+      </div>
+
+      <div class="chain-item">
+        <div class="chain-left">
+          <div class="chain-dot" style="background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue)">3</div>
+          <div class="chain-connector"></div>
+        </div>
+        <div class="chain-content">
+          <div class="chain-title">Citometría Anexina V/PI — "¿Cómo mueren exactamente?"</div>
+          <div class="chain-body">
+            Distingue entre apoptosis temprana (Anexina V+/PI−), apoptosis tardía (Anexina V+/PI+) y necrosis primaria (Anexina V−/PI+). <strong>Por qué importa la distinción:</strong> apoptosis es muerte celular programada, limpia, sin inflamación — es lo que buscas. Necrosis es muerte caótica, inflamatoria — en un tumor in vivo podría ser contraproducente. <strong>Gap que deja:</strong> confirma que mueren y cómo, pero no por qué mecanismo molecular específico activan la apoptosis.
+          </div>
+        </div>
+      </div>
+
+      <div class="chain-item">
+        <div class="chain-left">
+          <div class="chain-dot" style="background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple)">4</div>
+        </div>
+        <div class="chain-content">
+          <div class="chain-title">Western Blot — "¿El mecanismo molecular es el propuesto?"</div>
+          <div class="chain-body">
+            Confirma a nivel de proteínas que: Gedatolisib bloqueó p-Akt (el escudo de supervivencia está caído), CHOP está elevado (hay estrés de retículo endoplásmico), Caspasa-3 está clivada (apoptosis intrínseca activada). Sin este ensayo, tienes resultados pero no mecanismo — cualquier revisor pedirá esto.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:13.5px;color:var(--text3);margin-top:8px">Los 3 ensayos anteriores al WB (MTT, ATP, citometría) son la condición de entrada para justificar hacer WB: si las células no mueren en los primeros 3, no tiene sentido gastar $800+ USD en anticuerpos para confirmar el mecanismo de algo que no está ocurriendo.</p>
+
+    <table class="cmp-table" style="margin-top:20px">
+      <thead>
+        <tr>
+          <th>Ensayo alternativo</th>
+          <th>¿Por qué no se usa aquí?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Trypan Blue exclusión</strong></td>
+          <td>Solo cuenta células muertas totales. No da IC₅₀, no distingue mecanismo, muy operador-dependiente. Útil para contar células, no para medir eficacia de un tratamiento.</td>
+        </tr>
+        <tr>
+          <td><strong>Resazurina (AlamarBlue)</strong></td>
+          <td>Alternativa válida al MTT, pero MTT es más citado en literatura de melanoma y permite comparación directa con Chen et al. 2024 que usaron MTT.</td>
+        </tr>
+        <tr>
+          <td><strong>Caspasa-Glo® (luminiscente)</strong></td>
+          <td>Mide activación de caspasa-3/7 directamente. Más caro que citometría y da menos información morfológica. La citometría da además información de poblaciones completas.</td>
+        </tr>
+        <tr>
+          <td><strong>Seahorse XF (metabolismo)</strong></td>
+          <td>Medición ideal de respiración y glucólisis en tiempo real. Pero cuesta ~$20,000 USD el equipo. No disponible en la mayoría de laboratorios en México. CellTiter-Glo da la misma conclusión (colapso energético) a 1% del costo.</td>
+        </tr>
+        <tr>
+          <td><strong>qRT-PCR de genes metabólicos</strong></td>
+          <td>Mide expresión de ARN, no proteínas activas. Un gen puede transcribirse pero la proteína puede estar inactiva. Western Blot con anticuerpos fosfoespecíficos (p-Akt) da información funcional más relevante.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════
+       J3: POR QUÉ ESAS DOSIS
+  ═══════════════════════════ -->
+  <div id="j3" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">03</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>¿Por qué esas concentraciones<br>y no otras?</h2>
+    <p class="sec-lead">Las concentraciones no fueron elegidas arbitrariamente. Cada rango tiene una justificación basada en: literatura publicada con la misma línea celular, concentraciones fisiológicas, y la lógica de que las dosis deben explorar tanto el rango subterapéutico como el supraterapeútico para construir una curva dosis-respuesta real.</p>
+
+    <div class="dose-grid">
+      <div class="dose-card">
+        <div class="dose-drug" style="color:var(--teal)">Glucosa</div>
+        <div class="dose-range" style="color:var(--teal)">5 / 25 / 50 mM</div>
+        <div class="dose-why">
+          <strong>5 mM</strong> = glucosa fisiológica (referencia). <strong>25 mM</strong> = hiperglucemia moderada (equivalente a ~450 mg/dL, rango diabético severo). <strong>50 mM</strong> = sobrecarga extrema. DMEM estándar tiene ~25 mM, por eso G2 usa DMEM sin glucosa como base y agrega glucosa controlada. El rango completo de 5–50 mM cubre desde fisiológico hasta tóxico para mapear la curva.
+        </div>
+        <div class="dose-ref">Base: concentración fisiológica 5 mM · Hiperglucemia ≥25 mM</div>
+      </div>
+
+      <div class="dose-card">
+        <div class="dose-drug" style="color:var(--gold)">Insulina</div>
+        <div class="dose-range" style="color:var(--gold)">0.1 / 0.5 / 1.0 U/mL</div>
+        <div class="dose-why">
+          <strong>0.1 U/mL</strong> = dosis farmacológica baja. <strong>0.5 U/mL</strong> = dosis intermedia, comparable a los regímenes GIK cardioprotectores originales de Sodi-Pallarés. <strong>1.0 U/mL</strong> = dosis alta, reportada en modelos de captación máxima de glucosa en células tumorales. Por encima de 1 U/mL, el efecto se estabiliza (plateau) y el riesgo de hipoglucemia en el medio aumenta.
+        </div>
+        <div class="dose-ref">Base: GIK cardioprotector clásico · Rango terapéutico oncológico</div>
+      </div>
+
+      <div class="dose-card">
+        <div class="dose-drug" style="color:var(--blue)">2-DG (2-Deoxiglucosa)</div>
+        <div class="dose-range" style="color:var(--blue)">1 – 20 mM</div>
+        <div class="dose-why">
+          La literatura en B16F10 reporta IC₅₀ de 2-DG entre <strong>3–10 mM</strong> dependiendo de condiciones (Mohanti et al. 2007; Wang et al. 2011). El rango 1–20 mM asegura que explores por debajo y por encima del IC₅₀ esperado para construir una curva de 4 parámetros confiable. No empezar en 0 porque a concentración cero es simplemente el control.
+        </div>
+        <div class="dose-ref">Chen et al. 2024 (Acta Biomaterialia): 5–20 mM en melanoma</div>
+      </div>
+
+      <div class="dose-card">
+        <div class="dose-drug" style="color:var(--red)">Metformina</div>
+        <div class="dose-range" style="color:var(--red)">1 – 20 mM</div>
+        <div class="dose-why">
+          Concentración clínica en plasma humano con dosis terapéutica es 0.01–0.1 mM — mucho menor. Sin embargo, estudios in vitro consistentemente requieren <strong>1–20 mM</strong> para efectos anticancerígenos porque los modelos en placa no replican la distribución tisular ni el transporte activo in vivo. Esta discordancia in vitro/in vivo es conocida y se discute explícitamente en el manuscrito.
+        </div>
+        <div class="dose-ref">Gotlieb et al. 2008; Nair et al. 2014: 1–20 mM en melanoma in vitro</div>
+      </div>
+
+      <div class="dose-card">
+        <div class="dose-drug" style="color:var(--purple)">Gedatolisib</div>
+        <div class="dose-range" style="color:var(--purple)">10 – 500 nM</div>
+        <div class="dose-why">
+          Inhibidor dual PI3K/mTORC1+2. IC₅₀ reportado en líneas de melanoma: <strong>10–100 nM</strong> (Mallon et al. 2011; Liu et al. 2012). El rango 10–500 nM cubre desde el IC₅₀ esperado hasta 5× por encima para confirmar plateau y descartar efectos off-target a dosis muy altas. Usar menos de 10 nM sería sub-umbral para este blanco.
+        </div>
+        <div class="dose-ref">Mallon et al. 2011 (Mol Cancer Ther): IC₅₀ ~20–80 nM en tumores sólidos</div>
+      </div>
+
+      <div class="dose-card">
+        <div class="dose-drug" style="color:var(--orange)">Denifanstat (TVB-2640)</div>
+        <div class="dose-range" style="color:var(--orange)">0.1 – 10 µM</div>
+        <div class="dose-why">
+          Inhibidor de FASN (síntesis de ácidos grasos). IC₅₀ en líneas tumorales: <strong>0.5–3 µM</strong> (Falchook et al. 2021 — ensayo fase I en humanos con sólidos tumorales). El rango 0.1–10 µM cubre desde umbral hasta dosis claramente efectivas. Concentraciones ≥50 µM empiezan a mostrar efectos no específicos en membranas.
+        </div>
+        <div class="dose-ref">Falchook et al. 2021 (Ann Oncol): TVB-2640 fase I, IC₅₀ ~1–5 µM</div>
+      </div>
+    </div>
+
+    <div class="arg" style="margin-top:20px">
+      <div class="arg-q">"¿Por qué en G5 y G6 usarán IC₅₀ × 0.5 (dosis subóptimas)?"</div>
+      <div class="arg-a">
+        Esta es una decisión de diseño crítica que muchos revisores cuestionarán. La razón es que con dosis maximales (IC₅₀ o superiores) de los bloqueadores individuales, <strong>el efecto ya es tan grande que cualquier contribución adicional de GIK queda enmascarada en el ruido</strong>. Si 2-DG sola a 10 mM ya mata el 80% de las células, agregar GIK no puede matar más del 80% — el efecto de GIK sería invisible. Usar IC₅₀ × 0.5 (solo 50% de muerte con el bloqueador solo) deja "espacio biológico" para ver si GIK sube eso al 70%, 80%, 90% — evidencia directa de sinergia.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       J4: POR QUÉ N=6
+  ═══════════════════════════ -->
+  <div id="j4" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">04</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>¿Por qué n=6 réplicas por pocillo<br>y 3 réplicas biológicas?</h2>
+    <p class="sec-lead">El número de réplicas no es arbitrario ni "lo que cabe en la placa". Tiene una justificación estadística formal basada en análisis de poder.</p>
+
+    <div class="n-box">
+      <div class="n-title">Análisis de poder estadístico (cálculo formal)</div>
+      <div class="n-formula">
+        <span class="comment">// Parámetros del cálculo (basado en literatura B16F10)</span><br>
+        α (error tipo I) = <span class="hl">0.05</span>      <span class="comment">// p-value threshold estándar</span><br>
+        β (error tipo II) = <span class="hl">0.20</span>     <span class="comment">// poder estadístico = 80%</span><br>
+        Efecto mínimo detectable = <span class="hl">20%</span> diferencia en viabilidad<br>
+        CV esperado en MTT = <span class="hl">10–15%</span>  <span class="comment">// coeficiente de variación típico en placa</span><br><br>
+        <span class="comment">// Resultado del cálculo (G*Power o fórmula ANOVA)</span><br>
+        n mínimo por grupo = <span class="hl">5–6 pocillos</span><br>
+        <span class="comment">// → Se elige n=6 para tener buffer si algún pocillo se descarta</span>
+      </div>
+      <p style="font-size:13px;color:var(--text2);margin-top:12px">Con n=6 pocillos técnicos y 3 réplicas biológicas independientes (experimento repetido en 3 días distintos con diferentes pases celulares), tienes poder estadístico suficiente para detectar diferencias de ≥20% en viabilidad con p&lt;0.05 en ANOVA con Tukey. Una diferencia del 20% entre grupos es biológicamente significativa en este contexto.</p>
+    </div>
+
+    <div class="arg">
+      <div class="arg-q">"¿Por qué no usar n=3 y ahorrar reactivos?"</div>
+      <div class="arg-a">
+        Con n=3 por condición, el ensayo MTT tipicamente tiene un CV (coeficiente de variación) de 10–15%. Con n=3, el intervalo de confianza del 95% puede ser tan amplio que diferencias reales de 15–20% entre grupos no resultan estadísticamente significativas — es decir, un resultado real queda enterrado en el ruido. <strong>Con n=6, ese mismo CV produce intervalos de confianza significativamente más estrechos</strong>, y diferencias de 15% ya son detectables. El costo marginal de 3 pocillos adicionales por condición (unos centavos de reactivo MTT) es mínimo comparado con perder significancia estadística.
+      </div>
+    </div>
+
+    <div class="arg">
+      <div class="arg-q">"¿Qué es la diferencia entre réplica técnica y biológica?"</div>
+      <div class="arg-a">
+        Una <strong>réplica técnica</strong> (n=6 pocillos) mide variabilidad del ensayo mismo: pipeteo, distribución de células en la placa, uniformidad del lector. Una <strong>réplica biológica</strong> (3 experimentos independientes) mide variabilidad biológica real: diferencias entre pases celulares, estado fisiológico de las células ese día, lote de suero usado. Revistas como <em>Nature Cell Biology</em> explícitamente requieren ≥3 réplicas biológicas para publicar. Tener solo réplicas técnicas sin biológicas es la razón por la que muchos estudios no son reproducibles.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       J5: POR QUÉ ESE ORDEN
+  ═══════════════════════════ -->
+  <div id="j5" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">05</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>¿Por qué ese orden de experimentos?<br>¿No pueden hacerse en paralelo?</h2>
+    <p class="sec-lead">Técnicamente podrían hacerse algunos en paralelo, pero la secuencia propuesta existe porque cada ensayo informa al siguiente. Hacerlos en paralelo sin esa información sería un desperdicio de recursos.</p>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>Si hicieras esto en paralelo...</th>
+          <th>El problema sería...</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MTT + CellTiter-Glo al mismo tiempo (semanas 4–6)</strong></td>
+          <td>Esto sí se puede hacer en paralelo. No hay dependencia entre ambos — ambos necesitan las mismas condiciones. Se pueden sembrar el mismo día y correr simultáneamente. Esto se propone así en el SOP.</td>
+        </tr>
+        <tr>
+          <td><strong>Citometría antes de MTT</strong></td>
+          <td>Citometría necesita saber las dosis a usar (IC₅₀). Sin MTT primero, no sabes qué concentración poner en citometría. Poner dosis arbitraria podría resultar en 0% o 100% de muerte — ninguno de los dos extremos permite ver diferencias entre grupos.</td>
+        </tr>
+        <tr>
+          <td><strong>Western Blot desde el inicio</strong></td>
+          <td>WB usa ~$800 USD en anticuerpos para un solo experimento. Hacerlo sin saber si las células mueren sería como contratar un laboratorio forense antes de saber si alguien está muerto. MTT y citometría primero confirman que hay algo que mecanisticamente explicar.</td>
+        </tr>
+        <tr>
+          <td><strong>Todos los ensayos en semana 1</strong></td>
+          <td>La línea celular necesita establecerse (semanas 1–2), verificarse sin micoplasma, y los stocks de fármacos prepararse y validarse. Empezar experimentos cuantitativos con una línea recién descongelada y no caracterizada produce datos no reproducibles.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════
+       J6: POR QUÉ 7 GRUPOS
+  ═══════════════════════════ -->
+  <div id="j6" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">06</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>¿Por qué exactamente 7 grupos<br>y no 5, 8, o 10?</h2>
+    <p class="sec-lead">Cada grupo existe para responder una pregunta específica que ningún otro grupo puede responder. Eliminar cualquiera deja una pregunta sin responder. Agregar más crearía redundancia o preguntas no prioritarias para esta fase.</p>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-badge" style="background:rgba(224,80,80,0.15);color:#e05050">G1</div>
+        <span class="exp-name">Control Negativo — DMEM estándar</span>
+        <span class="exp-verdict" style="color:var(--teal)">INDISPENSABLE</span>
+      </div>
+      <div class="exp-body">
+        <div>
+          <div class="exp-col-title">Por qué existe</div>
+          <div class="exp-col-body">Es el <strong>denominador de todos los cálculos</strong>. El "% viabilidad" de cualquier grupo se calcula dividiendo entre G1. Sin G1, no puedes calcular absolutamente ningún porcentaje de muerte. Es la referencia del 100%.</div>
+        </div>
+        <div>
+          <div class="exp-col-title">Por qué no puedes eliminarlo</div>
+          <div class="exp-col-body">Si no tienes G1, no sabes si las células del día del experimento crecían normalmente. Podría ser que el día del experimento hubo un problema técnico y todas las células estaban ya mal — sin G1 no tendrías forma de saberlo.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-badge" style="background:rgba(212,168,67,0.15);color:var(--gold)">G2</div>
+        <span class="exp-name">GIK libre — Sobrecarga glucolítica pura</span>
+        <span class="exp-verdict" style="color:var(--teal)">INDISPENSABLE</span>
+      </div>
+      <div class="exp-body">
+        <div>
+          <div class="exp-col-title">Por qué existe</div>
+          <div class="exp-col-body">Prueba la <strong>hipótesis más simple</strong>: ¿la sobrecarga con glucosa + insulina sola es suficiente para matar células de melanoma? Si G2 produce alta muerte, no necesitas los bloqueadores — la hipótesis más simple se confirmaría y el cóctel completo sería innecesario.</div>
+        </div>
+        <div>
+          <div class="exp-col-title">Por qué no puedes eliminarlo</div>
+          <div class="exp-col-body">Sin G2, no sabes cuánto del efecto de G7 (cóctel completo) viene simplemente de la glucosa y la insulina. No podrías afirmar que los bloqueadores añaden valor a GIK. El resultado esperado (poca muerte) justifica la necesidad de los otros componentes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-badge" style="background:rgba(91,156,246,0.15);color:var(--blue)">G3</div>
+        <span class="exp-name">Bloqueo Energético Dual — 2-DG + Metformina</span>
+        <span class="exp-verdict" style="color:var(--teal)">ESTÁNDAR DE ORO</span>
+      </div>
+      <div class="exp-body">
+        <div>
+          <div class="exp-col-title">Por qué existe</div>
+          <div class="exp-col-body">Replica el tratamiento de <strong>Chen et al. 2024</strong> y múltiples estudios publicados de doble bloqueo energético en melanoma. Es el <strong>estándar de comparación</strong>: todo grupo más complejo que G3 debe superarlo estadísticamente para justificar la complejidad añadida.</div>
+        </div>
+        <div>
+          <div class="exp-col-title">Por qué no puedes eliminarlo</div>
+          <div class="exp-col-body">Sin G3, no puedes afirmar que tu cóctel es "mejor que lo que ya existe en la literatura". Solo podrías decir que funciona, no que es una mejora. G3 es la conexión con el estado del arte actual.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-badge" style="background:rgba(224,80,80,0.15);color:var(--red)">G4</div>
+        <span class="exp-name">Bloqueo Lipídico Dual — Anti-CD36 + Denifanstat</span>
+        <span class="exp-verdict" style="color:var(--gold)">NECESARIO</span>
+      </div>
+      <div class="exp-body">
+        <div>
+          <div class="exp-col-title">Por qué existe</div>
+          <div class="exp-col-body">Aísla la contribución de la vía lipídica al efecto total. En melanoma cutáneo, CD36 permite captación de lípidos de adipocitos dérmicos como fuente energética alternativa. Si G4 produce muerte significativa, confirma que los lípidos son una vía de escape relevante en B16F10.</div>
+        </div>
+        <div>
+          <div class="exp-col-title">Por qué no puedes eliminarlo</div>
+          <div class="exp-col-body">Sin G4, si el cóctel completo (G7) funciona, no sabrías si el componente lipídico contribuyó o fue irrelevante. Podrías estar poniendo Anti-CD36 y Denifanstat (los fármacos más costosos) sin que estén haciendo nada útil.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-badge" style="background:rgba(62,207,168,0.15);color:var(--teal)">G5</div>
+        <span class="exp-name">GIK + Bloqueo Energético — ¿La sobrecarga añade valor?</span>
+        <span class="exp-verdict" style="color:var(--teal)">EL MÁS IMPORTANTE</span>
+      </div>
+      <div class="exp-body">
+        <div>
+          <div class="exp-col-title">Por qué existe</div>
+          <div class="exp-col-body">Responde la <strong>pregunta central del proyecto</strong>: ¿agregar GIK al bloqueo energético es sinérgico? La comparación G5 vs G3 es el experimento más importante — si G5 > G3 estadísticamente, tienes la justificación científica para el nanovehículo.</div>
+        </div>
+        <div>
+          <div class="exp-col-title">Por qué no puedes eliminarlo</div>
+          <div class="exp-col-body">Sin G5, aunque G7 funcione brillantemente, no sabes si GIK contribuyó o si el resultado fue solo por 2-DG + Metformina + Gedatolisib. Podrías estar construyendo un nanovehículo con GIK que no necesita GIK — un desperdicio de Fase 2 entera.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-badge" style="background:rgba(168,125,232,0.15);color:var(--purple)">G6</div>
+        <span class="exp-name">GIK + Energía + Lípidos — Sin neutralizar escudo PI3K</span>
+        <span class="exp-verdict" style="color:var(--gold)">NECESARIO</span>
+      </div>
+      <div class="exp-body">
+        <div>
+          <div class="exp-col-title">Por qué existe</div>
+          <div class="exp-col-body">Es el cóctel completo <strong>sin Gedatolisib</strong>. La diferencia G7 − G6 cuantifica exactamente cuánto contribuye Gedatolisib al efecto total. Responde la crítica inevitable de revisores: "la insulina activa PI3K/Akt pro-supervivencia — ¿no protege eso a las células?"</div>
+        </div>
+        <div>
+          <div class="exp-col-title">Por qué no puedes eliminarlo</div>
+          <div class="exp-col-body">Sin G6, si un revisor pregunta "¿qué pasa si la insulina del GIK activa la señal de supervivencia y rescata a las células?", no tienes datos para responderlo. G6 vs G7 es la respuesta experimental directa a esa pregunta.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-badge" style="background:rgba(224,120,64,0.15);color:var(--orange)">G7 ★</div>
+        <span class="exp-name">Cóctel Completo — Hipótesis central</span>
+        <span class="exp-verdict" style="color:var(--teal)">INDISPENSABLE</span>
+      </div>
+      <div class="exp-body">
+        <div>
+          <div class="exp-col-title">Por qué existe</div>
+          <div class="exp-col-body">Es la <strong>prueba directa de la hipótesis</strong>. Todos los demás grupos son controles que permiten interpretar G7. Sin G7, la Fase 1 no tiene pregunta central que responder.</div>
+        </div>
+        <div>
+          <div class="exp-col-title">Resultado esperado vs. lo que significa</div>
+          <div class="exp-col-body"><strong>G7 > G3:</strong> GIK tiene valor → justifica nanovehículo. <strong>G7 ≈ G3:</strong> GIK no añade nada → replantear sin GIK (ahorra $40K). <strong>G7 ≈ G6:</strong> Gedatolisib innecesario → simplificar cóctel. Cualquier resultado es informativo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       J7: POR QUÉ B16F10
+  ═══════════════════════════ -->
+  <div id="j7" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">07</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>¿Por qué B16F10 y no<br>otra línea celular?</h2>
+    <p class="sec-lead">Existen múltiples líneas de melanoma disponibles (SK-MEL-28, A375, WM164, Mel-14...). B16F10 fue elegida por cuatro razones específicas que ninguna otra línea combina.</p>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>Criterio</th>
+          <th>B16F10</th>
+          <th>SK-MEL-28 (humana)</th>
+          <th>A375 (humana)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Continuidad con antecedentes</strong></td>
+          <td><span class="tag-yes">✓ IDEAL</span> — Hill et al. 2005 usó B16F10</td>
+          <td><span class="tag-no">✗</span> Sin antecedentes GIK</td>
+          <td><span class="tag-no">✗</span> Sin antecedentes GIK</td>
+        </tr>
+        <tr>
+          <td><strong>Modelo in vivo compatible (Fase 3)</strong></td>
+          <td><span class="tag-yes">✓ IDEAL</span> — Síngenico en C57BL/6J</td>
+          <td><span class="tag-no">✗</span> Requiere ratones nude o humanizados ($$$)</td>
+          <td><span class="tag-no">✗</span> Igual, requiere inmunodeficientes</td>
+        </tr>
+        <tr>
+          <td><strong>Sistema inmune intacto en Fase 3</strong></td>
+          <td><span class="tag-yes">✓ ESENCIAL</span> — C57BL/6J inmunocompetente</td>
+          <td><span class="tag-no">✗</span> Sistema inmune comprometido</td>
+          <td><span class="tag-no">✗</span> Sistema inmune comprometido</td>
+        </tr>
+        <tr>
+          <td><strong>Literatura de metabolismo disponible</strong></td>
+          <td><span class="tag-yes">✓</span> Amplia literatura de 2-DG y metformina</td>
+          <td><span class="tag-par">~ Parcial</span></td>
+          <td><span class="tag-par">~ Parcial</span></td>
+        </tr>
+        <tr>
+          <td><strong>Costo y disponibilidad</strong></td>
+          <td><span class="tag-yes">✓</span> ATCC ~$400 USD · ampliamente disponible</td>
+          <td><span class="tag-par">~ Similar</span></td>
+          <td><span class="tag-par">~ Similar</span></td>
+        </tr>
+        <tr>
+          <td><strong>Mutación BRAF V600E</strong></td>
+          <td><span class="tag-par">~ No tiene</span> — melanoma de tipo silvestre</td>
+          <td><span class="tag-no">✗ Tiene BRAF V600E</span> — puede responder a inhibidores BRAF</td>
+          <td><span class="tag-no">✗ Tiene BRAF V600E</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="arg" style="margin-top:16px">
+      <div class="arg-q">"¿La falta de BRAF V600E en B16F10 es una limitación?"</div>
+      <div class="arg-a">
+        Es una limitación a reconocer explícitamente en la discusión del manuscrito, pero no invalida el estudio. Tu mecanismo propuesto (colapso metabólico) es independiente del estado de BRAF — actúas sobre el metabolismo energético, no sobre la señalización de BRAF. De hecho, B16F10 <strong>sin BRAF V600E es un modelo más difícil de matar</strong> porque no responde a inhibidores de BRAF, lo que hace tu resultado más impactante si funciona. Si tu cóctel funciona en una línea resistente a las terapias dirigidas convencionales, el argumento para continuar es más fuerte.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       J8: POR QUÉ ESOS TIEMPOS
+  ═══════════════════════════ -->
+  <div id="j8" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">08</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>¿Por qué medir a 24h, 48h, 72h<br>y no en otros tiempos?</h2>
+
+    <div class="arg">
+      <div class="arg-q">"¿Por qué no medir solo a 72h y ya?"</div>
+      <div class="arg-a">
+        Porque necesitas distinguir entre <strong>efecto citostático</strong> (las células dejan de crecer pero no mueren) y <strong>efecto citotóxico</strong> (las células mueren activamente). Una lectura a un solo tiempo no permite hacer esa distinción. Si a 24h tienes 80% viabilidad pero a 72h tienes 20%, el efecto es claramente citotóxico y progresivo. Si a 24h tienes 80% y a 72h también 80%, las células simplemente dejaron de dividirse — eso tiene implicaciones completamente diferentes para el mecanismo.
+      </div>
+    </div>
+
+    <div class="arg">
+      <div class="arg-q">"¿Por qué ATP se mide a 6h, 12h, 24h y no a 48h–72h?"</div>
+      <div class="arg-a">
+        El colapso de ATP es un evento <strong>temprano y rápido</strong> en la cascada de muerte celular. Ocurre antes de que las células sean morfológicamente detectables como muertas. Si el mecanismo es correcto, el ATP debe caer dramáticamente en las primeras 6–12 horas, antes de que las caspasas se activen. Medir ATP a 48–72h solo confirmaría que las células están muertas — lo cual ya sabes por MTT. La cinética temprana de ATP (6h, 12h, 24h) es la evidencia directa del colapso metabólico propuesto en la hipótesis.
+      </div>
+    </div>
+
+    <div class="arg">
+      <div class="arg-q">"¿Por qué no medir a 1h, 2h, 4h para captar el colapso más rápidamente?"</div>
+      <div class="arg-a">
+        Tiempos muy tempranos (≤4h) son problemáticos porque: (1) los fármacos aún no han alcanzado equilibrio intracelular, (2) la respuesta celular inmediata incluye mecanismos de compensación que pueden enmascarar el efecto real, y (3) la variabilidad técnica entre pocillos a tiempos muy cortos es mayor. La literatura de 2-DG y metformina muestra que los efectos energéticos relevantes aparecen a partir de 6h de tratamiento.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════
+       J9: LO QUE NO RESPONDE
+  ═══════════════════════════ -->
+  <div id="j9" class="sec">
+    <div class="sec-eyebrow">
+      <span class="sec-num">09</span>
+      <div class="sec-line"></div>
+    </div>
+    <h2>Lo que este diseño<br><em>no puede responder</em></h2>
+    <p class="sec-lead">Reconocer explícitamente las limitaciones no debilita el estudio — las hace parte de la discusión y muestra que el investigador tiene claridad sobre el alcance de su trabajo.</p>
+
+    <div class="arg">
+      <span class="arg-tag" style="background:var(--red-dim);color:var(--red)">Limitación</span>
+      <div class="arg-q">"¿Los efectos se mantienen con células en 3D (esferoide) o en microambiente tumoral real?"</div>
+      <div class="arg-a">No. Las células en monocapa (2D) tienen acceso ilimitado a fármacos y oxígeno. Los tumores reales tienen gradientes de hipoxia, nutrientes, pH, y presión. Los efectos observados in vitro pueden diferir cuantitativamente in vivo. Esto se aborda en Fase 2 (esferoide 3D) y Fase 3 (modelo animal).</div>
+    </div>
+
+    <div class="arg">
+      <span class="arg-tag" style="background:var(--red-dim);color:var(--red)">Limitación</span>
+      <div class="arg-q">"¿Los fármacos libres son equivalentes a los encapsulados en la nanopartícula?"</div>
+      <div class="arg-a">No directamente. La nanopartícula cambia la farmacocinética: liberación controlada, targeting activo por CD44v6, acumulación en microambiente ácido. Fase 1 usa fármacos libres para validar el concepto biológico. La Fase 2 sintetizará el nanovehículo y comparará fármacos libres vs. encapsulados.</div>
+    </div>
+
+    <div class="arg">
+      <span class="arg-tag" style="background:var(--red-dim);color:var(--red)">Limitación</span>
+      <div class="arg-q">"¿Hay efectos sobre células no tumorales (selectividad)?"</div>
+      <div class="arg-a">No se evalúa en esta fase. Sería ideal incluir una línea de melanocitos normales (NHEM o melan-A) como control de selectividad. Esto se planifica como experimento adicional en Fase 1 si el presupuesto lo permite, o en Fase 2. La selectividad es crítica para justificar el avance a modelo animal.</div>
+    </div>
+
+    <div class="arg">
+      <span class="arg-tag" style="background:var(--red-dim);color:var(--red)">Limitación</span>
+      <div class="arg-q">"¿Las dosis in vitro efectivas son clínicamente alcanzables?"</div>
+      <div class="arg-a">Para metformina específicamente: las concentraciones in vitro efectivas (1–20 mM) son mucho mayores que las plasmáticas clínicas (0.01–0.1 mM). En el modelo in vivo con administración intratumoral, se busca concentración local alta en el tumor, no sistémica. Esta discordancia se discute explícitamente en el manuscrito y es un argumento para el nanovehículo de liberación intratumoral.</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div style="margin-top:64px;padding:24px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:gap;gap:16px">
+    <a href="hub.html" style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--text3);text-decoration:none;letter-spacing:2px">← HUB DEL PROYECTO</a>
+    <a href="metodologia_fase1.html" style="font-family:'Source Code Pro',monospace;font-size:11px;color:var(--teal);text-decoration:none;letter-spacing:2px">PROTOCOLOS DETALLADOS →</a>
+  </div>
+
+</div>
+</body>
+</html>
